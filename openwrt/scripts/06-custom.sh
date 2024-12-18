@@ -11,6 +11,10 @@ git clone https://$github/sbwml/openwrt-alist package/new/alist
 rm -rf feeds/packages/utils/lrzsz
 git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 
+rm -rf feeds/packages/net/smartdns feeds/luci/applications/luci-app-smartdns
+git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
+mv package/new/custom-packages/smartdns package/new/custom-packages/luci-app-smartdns package/new/custom-packages/luci-app-chatgpt-web package/new/custom-packages/luci-app-lucky package/new/
+rm -rf package/new/custom-packages
 
 # init
 # 检查文件是否存在，并输出其内容
