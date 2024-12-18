@@ -23,7 +23,7 @@ on:
       build_options:
         description: 'Build options (separate multiple options with spaces)'
         required: false
-        default: ''
+        default: 'LAN=10.0.0.29'
         type: string
 
 jobs:
