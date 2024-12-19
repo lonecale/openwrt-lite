@@ -81,6 +81,9 @@ uci commit dhcp
 uci commit network
 uci commit firewall
 
+# 修复luckyarch权限
+chmod 755 /usr/bin/luckyarch
+
 EOF
 
 # 修改退出命令到最后
