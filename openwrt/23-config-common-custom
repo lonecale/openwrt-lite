@@ -1,8 +1,8 @@
 ### Apps
-# CONFIG_PACKAGE_libnetsnmp=y
-# CONFIG_PACKAGE_snmp-mibs=y
-# CONFIG_PACKAGE_snmp-utils=y
-# CONFIG_PACKAGE_snmpd=y
+CONFIG_PACKAGE_libnetsnmp=y
+CONFIG_PACKAGE_snmp-mibs=y
+CONFIG_PACKAGE_snmp-utils=y
+CONFIG_PACKAGE_snmpd=y
 CONFIG_PACKAGE_openssh-client=y
 CONFIG_PACKAGE_openssh-keygen=y
 CONFIG_PACKAGE_luci-app-adguardhome=y
