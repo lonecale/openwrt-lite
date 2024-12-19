@@ -116,9 +116,9 @@ cat package/new/default-settings/default/zzz-default-settings
 echo -e "${GREEN_COLOR}End of modified zzz-default-settings output.${RES}\n"
 
 # 更改菜单位置
-sed -i 's/admin\/services\//admin\/vpn\//g' package/feeds/luci/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/admin\/services\//admin\/vpn\//g' package/feeds/luci/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
-cat package/feeds/luci/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-cat package/feeds/luci/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
-echo -e "${GREEN_COLOR}End of modified zzz-default-settings output.${RES}\n"
+cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
