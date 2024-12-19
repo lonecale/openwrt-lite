@@ -79,8 +79,8 @@ CONFIG_PACKAGE_luci-app-advancedplus=y
 CONFIG_PACKAGE_lucky=y
 CONFIG_PACKAGE_luci-app-lucky=y
 
-CONFIG_PACKAGE_librrd1=y
-CONFIG_PACKAGE_rrdtool1=y
+# CONFIG_PACKAGE_librrd1=y
+# CONFIG_PACKAGE_rrdtool1=y
 # CONFIG_PACKAGE_collectd=y
 # CONFIG_PACKAGE_collectd-mod-cpu=y
 # CONFIG_PACKAGE_collectd-mod-memory=y
@@ -89,7 +89,7 @@ CONFIG_PACKAGE_rrdtool1=y
 # CONFIG_PACKAGE_collectd-mod-network=y
 # CONFIG_PACKAGE_collectd-mod-iwinfo=y
 # CONFIG_PACKAGE_collectd-mod-rrdtool=y
-CONFIG_PACKAGE_luci-app-statistics=y
+# CONFIG_PACKAGE_luci-app-statistics=y
 
 CONFIG_PACKAGE_luci-app-syscontrol=y
 CONFIG_PACKAGE_luci-app-p910nd=y
