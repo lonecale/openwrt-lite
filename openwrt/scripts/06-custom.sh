@@ -39,13 +39,13 @@ DEFAULT_SETTINGS="package/new/default-settings/default/zzz-default-settings"
 cat >> $DEFAULT_SETTINGS <<-EOF
 # 设置主机名映射 解决安卓原生TV首次连不上网的问题
 uci add dhcp domain
-uci set "dhcp.@domain[-1].name=time.android.com"
-uci set "dhcp.@domain[-1].ip=203.107.6.88"
+uci set dhcp.@domain[-1].name='time.android.com'
+uci set dhcp.@domain[-1].ip='203.107.6.88'
 
 # 旁路由设置 IPv4 网关
 uci set network.lan.gateway='10.0.0.2' 
 # 旁路由设置 DNS(多个DNS要用空格分开)
-uci add_list network.lan.dns='101.101.101.101'
+uci add_list network.lan.dns='8.8.8.8'
 # 旁路由关闭DHCP功能
 uci set dhcp.lan.ignore=1
 # LAN口 委托IPv6前缀-关闭 (若用IPV6请把'0'改'1')
