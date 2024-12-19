@@ -113,8 +113,8 @@ jobs:
         df -Th
 
     - name: Set build date
-      run: echo "BUILD_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-
+      run: echo "BUILD_DATE=$(date +'%Y.%m.%d-%H%M')" >> $GITHUB_ENV
+      
     - name: Compile OpenWrt
       working-directory: /builder
       id: compile
