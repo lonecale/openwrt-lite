@@ -112,6 +112,9 @@ jobs:
         sudo chown -R runner:runner /builder
         df -Th
 
+    - name: Set build date
+      run: echo "BUILD_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
     - name: Compile OpenWrt
       working-directory: /builder
       id: compile
@@ -166,7 +169,10 @@ jobs:
         name: OpenWrt-23.05
         allowUpdates: true
         tag: openwrt-23.05
-        body: OpenWrt 23.05 with Kernel 6.11 Enhanced
+        # body: OpenWrt 23.05 with Kernel 6.11 Enhanced
+        body: |
+          OpenWrt 23.05 with Kernel 6.11 Enhanced
+          Build Date: ${{ env.BUILD_DATE }}
         commit: main
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
