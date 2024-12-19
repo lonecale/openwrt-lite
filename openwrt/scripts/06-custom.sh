@@ -14,7 +14,7 @@ git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 rm -rf feeds/packages/net/smartdns feeds/luci/applications/luci-app-smartdns
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
-dirs=(smartdns luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-app-fileassistant luci-theme-kucat luci-app-advancedplus lucky luci-app-lucky)
+dirs=(smartdns luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-app-fileassistant luci-theme-kucat luci-app-advancedplus lucky luci-app-lucky luci-app-syscontrol)
 
 for dir in "${dirs[@]}"; do
   mv "package/new/custom-packages/$dir" "package/new/"
