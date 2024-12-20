@@ -129,3 +129,17 @@ echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
 cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
+
+# 处理snmpd
+rm -rf feeds/packages/net/net-snmp
+cp -a ../master/packages/net/net-snmp feeds/packages/net/net-snmp
+
+处理luci-app-statistics
+rm -rf feeds/packages/utils/rrdtool1
+cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
+
+rm -rf feeds/packages/utils/collectd
+cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
+
+rm -rf feeds/luci/applications/luci-app-statistics
+cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
