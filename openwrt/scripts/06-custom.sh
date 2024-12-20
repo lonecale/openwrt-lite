@@ -199,4 +199,5 @@ else
     ls -d $(dirname "$(pwd)")/master/*/    exit 1
 fi
 
+exit 1
 
