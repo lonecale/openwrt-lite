@@ -125,15 +125,24 @@ echo -e "${GREEN_COLOR}End of modified zzz-default-settings output.${RES}\n"
 
 # 显示当前工作目录
 echo -e "${GREEN_COLOR}当前工作目录是：$(pwd)${RES}"
+
 # 显示当前目录的上一级目录下的所有目录
 echo -e "${GREEN_COLOR}当前目录的上一级目录下有以下目录：${RES}"
-ls -d $(dirname "$(pwd)")/*/ | xargs -n 1 basename | awk '{printf "'$GREEN_COLOR'%s'$RES'\n", $0}'
+for dir in $(dirname "$(pwd)")/*; do
+    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
+done
+
 # 显示 /master 目录下的所有目录
 echo -e "${GREEN_COLOR}/master 目录下有以下目录：${RES}"
-ls -d $(dirname "$(pwd)")/master/*/ | xargs -n 1 basename | awk '{printf "'$GREEN_COLOR'%s'$RES'\n", $0}'
+for dir in $(dirname "$(pwd)")/master/*; do
+    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
+done
+
 # 显示 /openwrt 目录下的所有目录
 echo -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
-ls -d $(dirname "$(pwd)")/openwrt/*/ | xargs -n 1 basename | awk '{printf "'$GREEN_COLOR'%s'$RES'\n", $0}'
+for dir in $(dirname "$(pwd)")/openwrt/*; do
+    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
+done
 
 # 处理snmpd
 ## 检查并复制 net-snmp
