@@ -41,20 +41,9 @@ cat >> $DEFAULT_SETTINGS <<-EOF
 uci add dhcp domain
 uci set dhcp.@domain[-1].name='time.android.com'
 uci set dhcp.@domain[-1].ip='203.107.6.88'
-
-# 旁路由设置 IPv4 网关
-uci set network.lan.gateway='10.0.0.2' 
-# 旁路由设置 DNS(多个DNS要用空格分开)
-uci add_list network.lan.dns='8.8.8.8'
 # 旁路由关闭DHCP功能
 uci set dhcp.lan.ignore=1
-# LAN口 委托IPv6前缀-关闭 (若用IPV6请把'0'改'1')
-uci set network.lan.delegate='0'
-# IPV6分配长度-禁用
-uci set network.lan.ip6assign=''
-# LAN口 IPv6 后缀-eui64
-uci set network.lan.ip6ifaceid='eui64'
-# 路由通告服务-禁用
+# IPv6 路由通告服务-禁用
 uci set dhcp.lan.ra=''
 # DHCPv6 服务-禁用
 uci set dhcp.lan.dhcpv6=''
@@ -63,6 +52,20 @@ uci set dhcp.lan.dhcpv6=''
 # NDP代理-禁用
 uci set dhcp.lan.ndp=''
 
+uci commit dhcp
+
+# 旁路由设置 IPv4 网关
+uci set network.lan.gateway='10.0.0.2' 
+# 旁路由设置 DNS(多个DNS要用空格分开)
+uci set network.lan.dns='8.8.8.8'
+
+# LAN口 委托IPv6前缀-关闭 (若用IPV6请把'0'改'1')
+uci set network.lan.delegate='0'
+# IPV6分配长度-禁用
+uci set network.lan.ip6assign=''
+# LAN口 IPv6 后缀-eui64
+uci set network.lan.ip6ifaceid='eui64'
+
 # 如果旁路由不需要IPV6的话,以下命令前面加#，默认创建一个dhcpv6接口获取主路由下发ipv6
 uci set network.lan6=interface
 uci set network.lan6.proto='dhcpv6'
@@ -70,19 +73,18 @@ uci set network.lan6.ifname='@lan'
 uci set network.lan6.reqaddress='try'
 uci set network.lan6.reqprefix='auto'
 uci set network.lan6.ip6ifaceid='eui64'
-uci set firewall.@zone[0].network='lan lan6'
 
 # 删除默认的WAN口配置
 uci delete network.wan
 uci delete network.wan6
 
-# 提交更改
-uci commit dhcp
 uci commit network
+
+uci set firewall.@zone[0].network='lan lan6'
 uci commit firewall
 
 # 修复luckyarch权限
-chmod 755 /usr/bin/luckyarch
+[ -e "/usr/bin/luckyarch" ] && chmod 755 /usr/bin/luckyarch
 
 EOF
 
