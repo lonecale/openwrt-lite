@@ -134,6 +134,25 @@ echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 rm -rf feeds/packages/net/net-snmp
 cp -a ../master/packages/net/net-snmp feeds/packages/net/net-snmp
 
+#!/bin/bash
+
+# 检查目录是否存在
+if [ -d "../master/packages/net/net-snmp" ]; then
+    # 目录存在时，执行复制命令
+    cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
+else
+    # 目录不存在时，打印当前目录的上一级目录下的所有子目录
+    echo "当前目录的上一级目录下有以下目录："
+    ls -d $(dirname "$(pwd)")/*/
+
+    # 打印 /master 下的所有目录
+    echo "/master 目录下有以下目录："
+    ls -d $(dirname "$(pwd)")/master/*/
+    exit 1
+    
+fi
+
+
 处理luci-app-statistics
 rm -rf feeds/packages/utils/rrdtool1
 cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
