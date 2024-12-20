@@ -89,6 +89,7 @@ uci commit firewall
 # 处理AdGuardHome核心
 [ -e "/usr/bin/AdGuardHome" ] && mv /usr/bin/AdGuardHome /usr/bin/AdGuardHome_temp && mkdir /usr/bin/AdGuardHome && mv /usr/bin/AdGuardHome_temp /usr/bin/AdGuardHome/AdGuardHome && chmod 755 /usr/bin/AdGuardHome/AdGuardHome
 EOF
+[ -e "/usr/share/AdGuardHome/addhost.sh" ] && chmod 755 /usr/share/AdGuardHome/addhost.sh
 
 # 修改退出命令到最后
 sed -i '/exit 0/d' $DEFAULT_SETTINGS && echo "exit 0" >> $DEFAULT_SETTINGS
@@ -122,6 +123,31 @@ echo -e "\n${GREEN_COLOR}Starting output of modified zzz-default-settings:${RES}
 cat package/new/default-settings/default/zzz-default-settings
 echo -e "${GREEN_COLOR}End of modified zzz-default-settings output.${RES}\n"
 
+# 显示当前工作目录
+echo -e "${GREEN_COLOR}当前工作目录是：$(pwd)${RES}"
+# 显示当前目录的上一级目录下的所有目录
+echo -e "${GREEN_COLOR}当前目录的上一级目录下有以下目录：${RES}"
+ls -d $(dirname "$(pwd)")/*/ | xargs -n 1 basename | awk '{printf "'$GREEN_COLOR'%s'$RES'\n", $0}'
+# 显示 /master 目录下的所有目录
+echo -e "${GREEN_COLOR}/master 目录下有以下目录：${RES}"
+ls -d $(dirname "$(pwd)")/master/*/ | xargs -n 1 basename | awk '{printf "'$GREEN_COLOR'%s'$RES'\n", $0}'
+# 显示 /openwrt 目录下的所有目录
+echo -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
+ls -d $(dirname "$(pwd)")/openwrt/*/ | xargs -n 1 basename | awk '{printf "'$GREEN_COLOR'%s'$RES'\n", $0}'
+
+# 处理snmpd
+## 检查并复制 net-snmp
+[ -d "../master/packages/net/net-snmp" ] && rm -rf feeds/packages/net/net-snmp && cp -a ../master/packages/net/net-snmp feeds/packages/net/net-snmp
+
+# 处理luci-app-statistics
+## 检查并复制 rrdtool1
+[ -d "../master/packages/utils/rrdtool1" ] && rm -rf feeds/packages/utils/rrdtool1 && cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
+## 检查并复制 collectd
+[ -d "../master/packages/utils/collectd" ] && rm -rf feeds/packages/utils/collectd && cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
+## 检查并复制 luci-app-statistics
+[ -d "../master/luci/applications/luci-app-statistics" ] && rm -rf feeds/luci/applications/luci-app-statistics && cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
+
+
 # 更改菜单位置
 sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
@@ -129,75 +155,3 @@ echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
 cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
-
-# 处理snmpd
-echo "当前工作目录是：$(pwd)"
-echo "当前目录的上一级目录下有以下目录："
-ls -d $(dirname "$(pwd)")/*/
-echo "/master 目录下有以下目录："
-ls -d $(dirname "$(pwd)")/master/*/
-
-# 检查并复制 net-snmp
-if [ -d "../master/packages/net/net-snmp" ]; then
-    # 目录存在时，执行复制命令
-    cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
-else
-    echo "错误：找不到目录 ../master/packages/net/net-snmp"
-    echo "当前目录的上一级目录下有以下目录："
-    ls -d $(dirname "$(pwd)")/*/
-
-    # 打印 /master 下的所有目录
-    echo "/master 目录下有以下目录："
-    ls -d $(dirname "$(pwd)")/master/*/
-    exit 1
-    
-fi
-
-# 处理luci-app-statistics
-
-# 检查并复制 rrdtool1
-if [ -d "../master/packages/utils/rrdtool1" ]; then
-    rm -rf feeds/packages/utils/rrdtool1
-    cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
-else
-    echo "错误：找不到目录 ../master/packages/utils/rrdtool1"
-    echo "当前目录的上一级目录下有以下目录："
-    ls -d $(dirname "$(pwd)")/*/
-
-    # 打印 /master 下的所有目录
-    echo "/master 目录下有以下目录："
-    ls -d $(dirname "$(pwd)")/master/*/
-    exit 1
-fi
-
-# 检查并复制 collectd
-if [ -d "../master/packages/utils/collectd" ]; then
-    rm -rf feeds/packages/utils/collectd
-    cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
-else
-    echo "错误：找不到目录 ../master/packages/utils/collectd"
-    echo "当前目录的上一级目录下有以下目录："
-    ls -d $(dirname "$(pwd)")/*/
-
-    # 打印 /master 下的所有目录
-    echo "/master 目录下有以下目录："
-    ls -d $(dirname "$(pwd)")/master/*/
-    exit 1
-fi
-
-# 检查并复制 luci-app-statistics
-if [ -d "../master/luci/applications/luci-app-statistics" ]; then
-    rm -rf feeds/luci/applications/luci-app-statistics
-    cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
-else
-    echo "错误：找不到目录 ../master/luci/applications/luci-app-statistics"
-    echo "当前目录的上一级目录下有以下目录："
-    ls -d $(dirname "$(pwd)")/*/
-
-    # 打印 /master 下的所有目录
-    echo "/master 目录下有以下目录："
-    ls -d $(dirname "$(pwd)")/master/*/    exit 1
-fi
-
-exit 1
-
