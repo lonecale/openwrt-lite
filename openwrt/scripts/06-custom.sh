@@ -131,17 +131,18 @@ cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tail
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 
 # 处理snmpd
-rm -rf feeds/packages/net/net-snmp
-cp -a ../master/packages/net/net-snmp feeds/packages/net/net-snmp
+echo "当前工作目录是：$(pwd)"
+echo "当前目录的上一级目录下有以下目录："
+ls -d $(dirname "$(pwd)")/*/
+echo "/master 目录下有以下目录："
+ls -d $(dirname "$(pwd)")/master/*/
 
-#!/bin/bash
-
-# 检查目录是否存在
+# 检查并复制 net-snmp
 if [ -d "../master/packages/net/net-snmp" ]; then
     # 目录存在时，执行复制命令
     cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
 else
-    # 目录不存在时，打印当前目录的上一级目录下的所有子目录
+    echo "错误：找不到目录 ../master/packages/net/net-snmp"
     echo "当前目录的上一级目录下有以下目录："
     ls -d $(dirname "$(pwd)")/*/
 
@@ -152,13 +153,50 @@ else
     
 fi
 
+# 处理luci-app-statistics
 
-处理luci-app-statistics
-rm -rf feeds/packages/utils/rrdtool1
-cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
+# 检查并复制 rrdtool1
+if [ -d "../master/packages/utils/rrdtool1" ]; then
+    rm -rf feeds/packages/utils/rrdtool1
+    cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
+else
+    echo "错误：找不到目录 ../master/packages/utils/rrdtool1"
+    echo "当前目录的上一级目录下有以下目录："
+    ls -d $(dirname "$(pwd)")/*/
 
-rm -rf feeds/packages/utils/collectd
-cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
+    # 打印 /master 下的所有目录
+    echo "/master 目录下有以下目录："
+    ls -d $(dirname "$(pwd)")/master/*/
+    exit 1
+fi
 
-rm -rf feeds/luci/applications/luci-app-statistics
-cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
+# 检查并复制 collectd
+if [ -d "../master/packages/utils/collectd" ]; then
+    rm -rf feeds/packages/utils/collectd
+    cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
+else
+    echo "错误：找不到目录 ../master/packages/utils/collectd"
+    echo "当前目录的上一级目录下有以下目录："
+    ls -d $(dirname "$(pwd)")/*/
+
+    # 打印 /master 下的所有目录
+    echo "/master 目录下有以下目录："
+    ls -d $(dirname "$(pwd)")/master/*/
+    exit 1
+fi
+
+# 检查并复制 luci-app-statistics
+if [ -d "../master/luci/applications/luci-app-statistics" ]; then
+    rm -rf feeds/luci/applications/luci-app-statistics
+    cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
+else
+    echo "错误：找不到目录 ../master/luci/applications/luci-app-statistics"
+    echo "当前目录的上一级目录下有以下目录："
+    ls -d $(dirname "$(pwd)")/*/
+
+    # 打印 /master 下的所有目录
+    echo "/master 目录下有以下目录："
+    ls -d $(dirname "$(pwd)")/master/*/    exit 1
+fi
+
+
