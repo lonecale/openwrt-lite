@@ -86,7 +86,8 @@ uci commit firewall
 
 # 修复luckyarch权限
 [ -e "/usr/bin/luckyarch" ] && chmod 755 /usr/bin/luckyarch
-
+# 处理AdGuardHome核心
+[ -e "/usr/bin/AdGuardHome" ] && mv /usr/bin/AdGuardHome /usr/bin/AdGuardHome_temp && mkdir /usr/bin/AdGuardHome && mv /usr/bin/AdGuardHome_temp /usr/bin/AdGuardHome/AdGuardHome && chmod 755 /usr/bin/AdGuardHome/AdGuardHome
 EOF
 
 # 修改退出命令到最后
