@@ -6,8 +6,8 @@
 # CONFIG_PACKAGE_snmp-mibs is not set
 # CONFIG_PACKAGE_snmp-utils is not set
 CONFIG_PACKAGE_snmpd=y
-# CONFIG_PACKAGE_openssh-client is not set
-# CONFIG_PACKAGE_openssh-keygen is not set
+CONFIG_PACKAGE_openssh-client=y
+CONFIG_PACKAGE_openssh-keygen=y
 CONFIG_PACKAGE_luci-app-cpufreq=y
 CONFIG_PACKAGE_luci-app-diskman=y
 # CONFIG_PACKAGE_luci-app-dufs is not set
@@ -66,29 +66,38 @@ CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y
 ### Please add new packages or patches in openwrt/scripts/06-custom.sh
 # CONFIG_PACKAGE_luci-app-alist is not set
 
+### Smartdns
 CONFIG_PACKAGE_smartdns=y
 CONFIG_PACKAGE_luci-app-smartdns=y
+
+### Adguardhome
 CONFIG_PACKAGE_adguardhome=y
 CONFIG_PACKAGE_luci-app-adguardhome=y
+
+### Wechatpush
 CONFIG_PACKAGE_luci-app-wechatpush=y
 CONFIG_PACKAGE_WECHATPUSH_Enable_Local_Disk_Information_Detection=y
 CONFIG_PACKAGE_WECHATPUSH_Enable_Host_Information_Detection=y
-CONFIG_PACKAGE_luci-app-chatgpt-web=y
-CONFIG_PACKAGE_luci-theme-kucat=y
-CONFIG_PACKAGE_luci-app-advancedplus=y
+
+### Lucky
 CONFIG_PACKAGE_lucky=y
 CONFIG_PACKAGE_luci-app-lucky=y
 
-# CONFIG_PACKAGE_librrd1=y
-# CONFIG_PACKAGE_rrdtool1=y
-# CONFIG_PACKAGE_collectd=y
-# CONFIG_PACKAGE_collectd-mod-cpu=y
-# CONFIG_PACKAGE_collectd-mod-memory=y
-# CONFIG_PACKAGE_collectd-mod-interface=y
-# CONFIG_PACKAGE_collectd-mod-load=y
-# CONFIG_PACKAGE_collectd-mod-network=y
-# CONFIG_PACKAGE_collectd-mod-iwinfo=y
-# CONFIG_PACKAGE_collectd-mod-rrdtool=y
+CONFIG_PACKAGE_luci-theme-kucat=y
+CONFIG_PACKAGE_luci-app-advancedplus=y
+CONFIG_PACKAGE_luci-app-chatgpt-web=y
+
+
+# CONFIG_PACKAGE_librrd1 is not set
+# CONFIG_PACKAGE_rrdtool1 is not set
+# CONFIG_PACKAGE_collectd is not set
+# CONFIG_PACKAGE_collectd-mod-cpu is not set
+# CONFIG_PACKAGE_collectd-mod-memory is not set
+# CONFIG_PACKAGE_collectd-mod-interface is not set
+# CONFIG_PACKAGE_collectd-mod-load is not set
+# CONFIG_PACKAGE_collectd-mod-network is not set
+# CONFIG_PACKAGE_collectd-mod-iwinfo is not set
+# CONFIG_PACKAGE_collectd-mod-rrdtool is not set
 CONFIG_PACKAGE_luci-app-statistics=y
 
 CONFIG_PACKAGE_luci-app-syscontrol=y
