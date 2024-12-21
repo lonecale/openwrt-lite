@@ -11,9 +11,14 @@ git clone https://$github/sbwml/openwrt-alist package/new/alist
 rm -rf feeds/packages/utils/lrzsz
 git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 
-rm -rf feeds/packages/net/smartdns feeds/luci/applications/luci-app-smartdns package/new/extd/smartdns package/new/extd/luci-app-smartdns
-rm -rf feeds/packages/net/adguardhome package/new/extd/adguardhome package/new/extd/luci-app-adguardhome
-rm -rf package/new/extd/luci-app-netdata
+# clean up feeds
+rm -rf feeds/luci/applications/{luci-app-smartdns}
+rm -rf feeds/packages/net/{adguardhome,smartdns}
+rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,luci-app-netdata}
+
+# rm -rf feeds/packages/net/smartdns feeds/luci/applications/luci-app-smartdns package/new/extd/smartdns package/new/extd/luci-app-smartdns
+# rm -rf feeds/packages/net/adguardhome package/new/extd/adguardhome package/new/extd/luci-app-adguardhome
+# rm -rf package/new/extd/luci-app-netdata
 
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
