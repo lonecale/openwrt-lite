@@ -46,6 +46,14 @@ https://github.com/pmkol/openwrt-lite/releases
 - 系统默认使用支持指令补全功能的Bash
 - 轻量集成常用插件，优化、修复上游插件BUG
 
+```
+固件分为 SquashFS 和 Ext4 两个文件系统
+
+SquashFS：固件文件名带有 “squashfs”，SquashFS 为只读文件系统，支持系统重置，适合绝大部分用户使用
+
+Ext4：固件文件名带有 “ext4”，Ext4 文件系统具备整个分区可读写性质，适合熟悉 Linux 系统的用户使用
+```
+
 ---------------
 
 ### 版本说明：
@@ -110,6 +118,33 @@ https://github.com/pmkol/openwrt-lite/releases
 
 ---------------
 
+### 附加功能：
+- RTC 硬件时钟（HYM8563）
+
+  NanoPi 支持 RTC 硬件时钟读取/同步，当设备断电时，重新通电启动系统时间不会错乱 （注意：设备需要安装 RTC 电池后使用）
+
+  首次安装 RTC 电池写入时间命令
+  ```
+  hwclock -w -f /dev/rtc1
+  ```
+
+  测试时间读取（返回当前时间表示正常）
+  ```
+  hwclock -f /dev/rtc1
+  ```
+
+- R5S eMMC
+
+  固件写入（SD to eMMC）
+  ```
+  # 1、下载最新 Releases 固件并通过 SD 卡启动
+  # 2、使用 FileZilla 等工具上传一份固件到 /tmp 目录，或通过终端 wget 在线下载固件到 /tmp 目录
+  # 3、使用内建命令写入固件到 eMMC 存储（请根据实际文件名称与路径）
+  emmc-install /tmp/openwrt-23.05.5-rockchip-armv8-friendlyarm_nanopi-r5s-ext4-sysupgrade.img.gz
+  ```
+
+---------------
+
 ### 自定义构建固件：
 提供云构建与本地编译两种方式
 
@@ -150,10 +185,10 @@ Build options: 默认无需填写，用于写入高级构建参数，参数之�
 
 #### 本地编译构建（内存16G+ / 硬盘80G+）
 
-#### Linux 环境安装（debian 11+ / ubuntu 22+）
+#### Linux 环境安装（debian 12+ / ubuntu 24+）
 ```shell
 sudo apt-get update
-sudo apt-get install -y build-essential flex bison g++ gawk gcc-multilib g++-multilib gettext git libfuse-dev libncurses5-dev libssl-dev python3 python3-pip python3-ply python3-distutils python3-pyelftools rsync unzip zlib1g-dev file wget subversion patch upx-ucl autoconf automake curl asciidoc binutils bzip2 lib32gcc-s1 libc6-dev-i386 uglifyjs msmtp texinfo libreadline-dev libglib2.0-dev xmlto libelf-dev libtool autopoint antlr3 gperf ccache swig coreutils haveged scons libpython3-dev jq
+sudo apt-get install -y build-essential flex bison cmake g++ gawk gcc-multilib g++-multilib gettext git gnutls-dev libfuse-dev libncurses5-dev libssl-dev python3 python3-pip python3-ply python3-pyelftools rsync unzip zlib1g-dev file wget subversion patch upx-ucl autoconf automake curl asciidoc binutils bzip2 lib32gcc-s1 libc6-dev-i386 uglifyjs msmtp texinfo libreadline-dev libglib2.0-dev xmlto libelf-dev libtool autopoint antlr3 gperf ccache swig coreutils haveged scons libpython3-dev rename qemu-utils jq
 ```
 
 #### 一、Fork 本仓库到自己 GitHub 存储库
@@ -236,6 +271,15 @@ DPDK（[Data Plane Development Kit](https://www.dpdk.org/) ）是一个开源工
 
 ```
 export ENABLE_DPDK=y
+```
+
+#### 启用 NoDocker 模式
+Server版默认会构建 Docker 服务，使用该参数会跳过安装 Docker 仅支持 Iptables
+
+只需在构建固件前执行以下命令即可跳过Server版的 Docker 安装
+
+```
+export NO_DOCKER=y
 ```
 
 #### 启用 GitHub 代理（仅限本地编译）
