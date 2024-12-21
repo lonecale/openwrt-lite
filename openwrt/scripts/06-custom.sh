@@ -177,15 +177,15 @@ curl -sfL https://github.com/immortalwrt/luci/raw/master/modules/luci-base/root/
 sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
-cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
+# cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 
 # 汉化
-curl -sfL -o package/convert_translation.sh https://github.com/kenzok8/small-package/raw/main/.github/diy/convert_translation.sh
-echo -e "${GREEN_COLOR}\ncat convert_translation.sh:${RES}"
-cat package/convert_translation.sh
+# curl -sfL -o package/convert_translation.sh https://github.com/kenzok8/small-package/raw/main/.github/diy/convert_translation.sh
+# echo -e "${GREEN_COLOR}\ncat convert_translation.sh:${RES}"
+# cat package/convert_translation.sh
 # chmod +x package/convert_translation.sh && bash package/convert_translation.sh
 
 # 更新passwall gfw规则
@@ -207,7 +207,7 @@ sed -i 's|option geosite_custom_url.*|option geosite_custom_url '\''https://test
 sed -i 's|option geoip_custom_url.*|option geoip_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'\''|' ../config/openclash
 sed -i 's|option chnr_custom_url.*|option chnr_custom_url '\''https://raw.githubusercontent.com/DH-Teams/DH-Geo_AS_IP_CN/main/Geo_AS_IP_CN.txt'\''|' ../config/openclash
 sed -i 's|option chnr6_custom_url.*|option chnr6_custom_url '\''https://raw.githubusercontent.com/DH-Teams/DH-Geo_AS_IP_CN/main/Geo_AS_IP_CN_6.txt'\''|' ../config/openclash
-echo -e "${GREEN_COLOR}\ncat openclash:${RES}"
-cat ../config/openclash
+# echo -e "${GREEN_COLOR}\ncat openclash:${RES}"
+# cat ../config/openclash
 # 返回原始目录
 popd
