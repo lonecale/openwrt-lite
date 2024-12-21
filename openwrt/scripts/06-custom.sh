@@ -107,21 +107,21 @@ uci set network.lan.ip6assign=''
 uci set network.lan.ip6ifaceid='eui64'
 
 # 如果旁路由不需要IPV6的话,以下命令前面加#，默认创建一个dhcpv6接口获取主路由下发ipv6
-uci set network.lan6=interface
-uci set network.lan6.proto='dhcpv6'
-uci set network.lan6.ifname='@lan'
-uci set network.lan6.reqaddress='try'
-uci set network.lan6.reqprefix='auto'
-uci set network.lan6.ip6ifaceid='eui64'
+# uci set network.lan6=interface
+# uci set network.lan6.proto='dhcpv6'
+# uci set network.lan6.ifname='@lan'
+# uci set network.lan6.reqaddress='try'
+# uci set network.lan6.reqprefix='auto'
+# uci set network.lan6.ip6ifaceid='eui64'
 
 # 删除默认的WAN口配置
-# uci delete network.wan
-# uci delete network.wan6
+uci delete network.wan
+uci delete network.wan6
 
 uci commit network
 
-uci set firewall.@zone[0].network='lan lan6'
-uci commit firewall
+# uci set firewall.@zone[0].network='lan lan6'
+# uci commit firewall
 
 # 修复luckyarch权限
 [ -e "/usr/bin/luckyarch" ] && chmod 755 /usr/bin/luckyarch
