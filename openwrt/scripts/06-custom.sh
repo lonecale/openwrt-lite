@@ -107,7 +107,7 @@ uci set network.lan.ip6assign=''
 # LAN口 IPv6 后缀-eui64
 uci set network.lan.ip6ifaceid='eui64'
 
-# 如果旁路由不需要IPV6的话,以下命令前面加#，默认创建一个dhcpv6接口获取主路由下发ipv6
+# 如果旁路由需要IPV6的话,以下命令取消#注释，会创建一个dhcpv6接口获取主路由下发ipv6
 # uci set network.lan6=interface
 # uci set network.lan6.proto='dhcpv6'
 # uci set network.lan6.ifname='@lan'
