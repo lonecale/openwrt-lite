@@ -25,7 +25,7 @@ endgroup() {
 ###############################
 
 # openwrt repo
-OPENWRT_REPO=pmkol/openwrt-lite
+OPENWRT_REPO=lonecale/openwrt-lite
 
 # github proxy
 [ "$CN_PROXY" = "y" ] && github_proxy="ghproxy.cc/https://" || github_proxy=""
@@ -269,6 +269,9 @@ else
     [ "$NO_DOCKER" = "y" ] && sed -i '/DOCKER/Id' .config
     echo 'VERSION_TYPE="server"' >> package/base-files/files/usr/lib/os-release
 fi
+
+# 删除 .config 文件中的 luci-app-argon-config避免和luci-app-advancedplus冲突，如果不需要luci-app-advancedplus可以注释下面这一行
+sed -i '/CONFIG_PACKAGE_luci-app-argon-config/d' .config
 
 # config-firmware
 [ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ] && curl -s https://$mirror/openwrt/generic/config-firmware >> .config
