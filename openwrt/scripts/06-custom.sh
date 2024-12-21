@@ -174,12 +174,12 @@ echo -e "\n${GREEN_COLOR}Starting output of menu:${RES}"
 cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 curl -sfL https://github.com/immortalwrt/luci/raw/master/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json > feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 
-sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+[ -d "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+[ -d "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
 # cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
-cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+[ -d "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+[ -d "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 
 # 汉化
@@ -189,25 +189,29 @@ echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 # chmod +x package/convert_translation.sh && bash package/convert_translation.sh
 
 # 更新passwall gfw规则
-# curl -sfL -o package/new/lite/luci-app-passwall/root/usr/share/passwall/rules/gfwlist https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt
+if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-passwall=y"; then
+    # curl -sfL -o package/new/lite/luci-app-passwall/root/usr/share/passwall/rules/gfwlist https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt
+fi
 
 # OpenClash 核心
-# 保存当前目录并切换到指定目录
-pushd package/new/lite/luci-app-openclash/root/etc/openclash
-CORE_MATE=https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64.tar.gz
-curl -sfL -o ./Country.mmdb https://github.com/xream/geoip/releases/latest/download/ipinfo.country.mmdb
-curl -sfL -o ./GeoSite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat
-curl -sfL -o ./GeoIP.dat https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat
-mkdir ./core && cd ./core
-curl -sfL -o ./meta.tar.gz "$CORE_MATE" && tar -zxf ./meta.tar.gz && mv ./clash ./clash_meta
-chmod +x ./clash* ; rm -rf ./*.gz
-cd .. && find . -print
-sed -i 's|option geo_custom_url.*|option geo_custom_url '\''https://github.com/xream/geoip/releases/latest/download/ipinfo.country.mmdb'\''|' ../config/openclash
-sed -i 's|option geosite_custom_url.*|option geosite_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat'\''|' ../config/openclash
-sed -i 's|option geoip_custom_url.*|option geoip_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'\''|' ../config/openclash
-sed -i 's|option chnr_custom_url.*|option chnr_custom_url '\''https://raw.githubusercontent.com/DH-Teams/DH-Geo_AS_IP_CN/main/Geo_AS_IP_CN.txt'\''|' ../config/openclash
-sed -i 's|option chnr6_custom_url.*|option chnr6_custom_url '\''https://raw.githubusercontent.com/DH-Teams/DH-Geo_AS_IP_CN/main/Geo_AS_IP_CN_6.txt'\''|' ../config/openclash
-# echo -e "${GREEN_COLOR}\ncat openclash:${RES}"
-# cat ../config/openclash
-# 返回原始目录
-popd
+if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-openclash=y"; then
+    # 保存当前目录并切换到指定目录
+    pushd package/new/lite/luci-app-openclash/root/etc/openclash
+    CORE_MATE=https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64.tar.gz
+    curl -sfL -o ./Country.mmdb https://github.com/xream/geoip/releases/latest/download/ipinfo.country.mmdb
+    curl -sfL -o ./GeoSite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat
+    curl -sfL -o ./GeoIP.dat https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat
+    mkdir ./core && cd ./core
+    curl -sfL -o ./meta.tar.gz "$CORE_MATE" && tar -zxf ./meta.tar.gz && mv ./clash ./clash_meta
+    chmod +x ./clash* ; rm -rf ./*.gz
+    cd .. && find . -print
+    sed -i 's|option geo_custom_url.*|option geo_custom_url '\''https://github.com/xream/geoip/releases/latest/download/ipinfo.country.mmdb'\''|' ../config/openclash
+    sed -i 's|option geosite_custom_url.*|option geosite_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat'\''|' ../config/openclash
+    sed -i 's|option geoip_custom_url.*|option geoip_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'\''|' ../config/openclash
+    sed -i 's|option chnr_custom_url.*|option chnr_custom_url '\''https://raw.githubusercontent.com/DH-Teams/DH-Geo_AS_IP_CN/main/Geo_AS_IP_CN.txt'\''|' ../config/openclash
+    sed -i 's|option chnr6_custom_url.*|option chnr6_custom_url '\''https://raw.githubusercontent.com/DH-Teams/DH-Geo_AS_IP_CN/main/Geo_AS_IP_CN_6.txt'\''|' ../config/openclash
+    # echo -e "${GREEN_COLOR}\ncat openclash:${RES}"
+    # cat ../config/openclash
+    # 返回原始目录
+    popd
+fi
