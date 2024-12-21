@@ -50,10 +50,10 @@ fi
 
 # net-snmp & collectd & rrdtool1 - bump version
 rm -rf feeds/packages/net/net-snmp
-mv ../master/lite-23.05/net-snmp feeds/packages/net/net-snmp
+mv ../master/extd-23.05/net-snmp feeds/packages/net/net-snmp
 rm -rf feeds/packages/utils/{collectd,rrdtool1}
-mv ../master/lite-23.05/collectd feeds/packages/utils/collectd
-mv ../master/lite-23.05/rrdtool1 feeds/packages/utils/rrdtool1
+mv ../master/extd-23.05/collectd feeds/packages/utils/collectd
+mv ../master/extd-23.05/rrdtool1 feeds/packages/utils/rrdtool1
 
 # irqbalance - disable build with numa
 if [ "$ENABLE_DPDK" = "y" ]; then
