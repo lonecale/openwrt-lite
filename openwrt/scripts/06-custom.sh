@@ -156,6 +156,9 @@ done
 ## 检查并复制 luci-app-statistics
 [ -d "../master/luci/applications/luci-app-statistics" ] && rm -rf feeds/luci/applications/luci-app-statistics && cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
 
+# 处理openssh
+## 检查并复制 openssh
+[ -d "../master/packages/net/openssh" ] && rm -rf feeds/packages/net/openssh && cp -a ../master/packages/net/openssh feeds/packages/net/openssh
 
 # 更改菜单位置
 sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
