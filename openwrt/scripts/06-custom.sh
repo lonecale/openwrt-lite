@@ -13,10 +13,11 @@ git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 
 rm -rf feeds/packages/net/smartdns feeds/luci/applications/luci-app-smartdns package/new/extd/smartdns package/new/extd/luci-app-smartdns
 rm -rf feeds/packages/net/adguardhome package/new/extd/adguardhome package/new/extd/luci-app-adguardhome
+rm -rf package/new/extd/luci-app-netdata
 
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
-dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol)
+dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol luci-app-netdata)
 
 for dir in "${dirs[@]}"; do
   mv "package/new/custom-packages/$dir" "package/new/"
