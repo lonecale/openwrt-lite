@@ -189,9 +189,9 @@ echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 # chmod +x package/convert_translation.sh && bash package/convert_translation.sh
 
 # 更新passwall gfw规则
-if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-passwall=y"; then
+# if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-passwall=y"; then
     # curl -sfL -o package/new/lite/luci-app-passwall/root/usr/share/passwall/rules/gfwlist https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt
-fi
+# fi
 
 # OpenClash 核心
 if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-openclash=y"; then
