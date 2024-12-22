@@ -22,7 +22,7 @@ rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smar
 
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
-dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol luci-app-netdata)
+dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata)
 
 for dir in "${dirs[@]}"; do
   mv "package/new/custom-packages/$dir" "package/new/"
