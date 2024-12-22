@@ -14,7 +14,7 @@ git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 # clean up feeds
 rm -rf feeds/luci/applications/{luci-app-smartdns}
 rm -rf feeds/packages/net/{adguardhome,smartdns}
-rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,luci-app-netdata}
+rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,netdata,luci-app-netdata,luci-app-argon-config}
 
 # rm -rf feeds/packages/net/smartdns feeds/luci/applications/luci-app-smartdns package/new/extd/smartdns package/new/extd/luci-app-smartdns
 # rm -rf feeds/packages/net/adguardhome package/new/extd/adguardhome package/new/extd/luci-app-adguardhome
