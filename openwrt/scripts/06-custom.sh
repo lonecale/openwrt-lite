@@ -53,19 +53,19 @@ done
 
 # 处理snmpd
 ## 检查并复制 net-snmp
-# [ -d "../master/packages/net/net-snmp" ] && rm -rf feeds/packages/net/net-snmp && cp -a ../master/packages/net/net-snmp feeds/packages/net/net-snmp
+# [ -e "../master/packages/net/net-snmp" ] && rm -rf feeds/packages/net/net-snmp && cp -a ../master/packages/net/net-snmp feeds/packages/net/net-snmp
 
 # 处理luci-app-statistics
 ## 检查并复制 rrdtool1
-# [ -d "../master/packages/utils/rrdtool1" ] && rm -rf feeds/packages/utils/rrdtool1 && cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
+# [ -e "../master/packages/utils/rrdtool1" ] && rm -rf feeds/packages/utils/rrdtool1 && cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
 ## 检查并复制 collectd
-# [ -d "../master/packages/utils/collectd" ] && rm -rf feeds/packages/utils/collectd && cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
+# [ -e "../master/packages/utils/collectd" ] && rm -rf feeds/packages/utils/collectd && cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
 ## 检查并复制 luci-app-statistics
-# [ -d "../master/luci/applications/luci-app-statistics" ] && rm -rf feeds/luci/applications/luci-app-statistics && cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
+# [ -e "../master/luci/applications/luci-app-statistics" ] && rm -rf feeds/luci/applications/luci-app-statistics && cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
 
 # 处理openssh
 ## 检查并复制 openssh
-# [ -d "../master/packages/net/openssh" ] && rm -rf feeds/packages/net/openssh && cp -a ../master/packages/net/openssh feeds/packages/net/openssh
+# [ -e "../master/packages/net/openssh" ] && rm -rf feeds/packages/net/openssh && cp -a ../master/packages/net/openssh feeds/packages/net/openssh
 
 
 # init
@@ -174,12 +174,12 @@ echo -e "\n${GREEN_COLOR}Starting output of menu:${RES}"
 cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 curl -sfL https://github.com/immortalwrt/luci/raw/master/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json > feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 
-[ -d "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-[ -d "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+[ -e "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+[ -e "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
 # cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
-[ -d "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-[ -d "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+[ -e "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+[ -e "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 
 # 汉化
