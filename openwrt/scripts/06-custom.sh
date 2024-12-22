@@ -175,7 +175,7 @@ cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 curl -sfL https://github.com/immortalwrt/luci/raw/master/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json > feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 
 [ -e "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-[ -e "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json  
+[ -e "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
 # cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 [ -e "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
@@ -183,9 +183,10 @@ echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 
 # luci-app-wechatpush处理
-curl -sfL -o package/new/luci-app-wechatpush/root/usr/share/wechatpush/api/logo.jpg https://raw.githubusercontent.com/lonecale/Groceries/main/Logo/logo.jpg
+if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-wechatpush=y"; then
+    curl -sfL -o package/new/luci-app-wechatpush/root/usr/share/wechatpush/api/logo.jpg https://raw.githubusercontent.com/lonecale/Groceries/main/Logo/logo.jpg
+fi
 
-luci-app-wechatpush
 # 汉化
 # curl -sfL -o package/convert_translation.sh https://github.com/kenzok8/small-package/raw/main/.github/diy/convert_translation.sh
 # echo -e "${GREEN_COLOR}\ncat convert_translation.sh:${RES}"
