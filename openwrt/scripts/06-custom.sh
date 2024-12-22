@@ -215,3 +215,16 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
     # 返回原始目录
     popd
 fi
+
+# defaults
+mkdir -p files/etc/uci-defaults
+curl -sfL -o files/etc/uci-defaults/99-pre_install https://$mirror/openwrt/files/etc/uci-defaults/99-pre_install
+# 创建预安装ipk存储文件夹
+mkdir -p files/etc/pre_install
+# 下载安装ipk
+curl -sfL -o files/etc/pre_install/luci-app-commands_git-24.272.29284-d386ad6_all.ipk https://mirror.nju.edu.cn/immortalwrt/releases/23.05.4/packages/x86_64/luci/luci-app-commands_git-24.272.29284-d386ad6_all.ipk
+curl -sfL -o files/etc/pre_install/luci-i18n-commands-zh-cn_git-24.321.37380-2756dc1_all.ipk https://mirror.nju.edu.cn/immortalwrt/releases/23.05.4/packages/x86_64/luci/luci-i18n-commands-zh-cn_git-24.321.37380-2756dc1_all.ipk
+
+
+
+
