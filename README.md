@@ -109,7 +109,7 @@ Ext4：固件文件名带有 “ext4”，Ext4 文件系统具备整个分区可
   删除下方命令前的注释 `#` 即可开启 *每日5点* 更新非系统插件的软件包
 
   ```
-  0 5 * * * opkg list-upgradable | grep -vE "(luci-base|luci-mod-)" | awk '{print $1}' | xargs opkg upgrade
+  0 5 * * * opkg update && opkg list-upgradable | grep -vE "(luci-base|luci-mod-)" | awk '{print $1}' | xargs opkg upgrade
   ```
 
 - 固件升级
