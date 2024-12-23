@@ -168,6 +168,10 @@ echo -e "\n${GREEN_COLOR}Starting output of modified zzz-default-settings:${RES}
 cat package/new/default-settings/default/zzz-default-settings
 echo -e "${GREEN_COLOR}End of modified zzz-default-settings output.${RES}\n"
 
+# 更改默认主题
+echo -e "${GREEN_COLOR}\ncat feeds/luci/collections/luci/Makefile:${RES}"
+cat feeds/luci/collections/luci/Makefile
+# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # 更改菜单位置
 echo -e "\n${GREEN_COLOR}Starting output of menu:${RES}"
