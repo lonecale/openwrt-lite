@@ -69,6 +69,9 @@ done
 
 
 # init
+# 修改Lan IP
+# sed -i "s/$LAN/10.0.0.1/g" package/base-files/files/bin/config_generate
+
 # 检查文件是否存在，并输出其内容
 if [ -f "package/new/default-settings/default/zzz-default-settings" ]; then
     echo -e "\n${GREEN_COLOR}Starting output of zzz-default-settings:${RES}"
