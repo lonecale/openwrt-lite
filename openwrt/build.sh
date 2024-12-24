@@ -180,8 +180,10 @@ fi
 
 # feeds mirror
 cat > feeds.conf <<EOF
-src-git packages https://$github/openwrt/packages.git;openwrt-23.05
-src-git luci https://$github/openwrt/luci.git;openwrt-23.05
+# src-git packages https://$github/openwrt/packages.git;openwrt-23.05
+# src-git luci https://$github/openwrt/luci.git;openwrt-23.05
+src-git packages https://$github/openwrt/packages.git;master
+src-git luci https://$github/openwrt/luci.git;master
 src-git routing https://$github/openwrt/routing.git;openwrt-23.05
 src-git telephony https://$github/openwrt/telephony.git;openwrt-23.05
 EOF
