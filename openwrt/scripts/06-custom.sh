@@ -22,13 +22,14 @@ rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smar
 
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
-dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf)
+dirs=(openwrt smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf)
 
 for dir in "${dirs[@]}"; do
   mv "package/new/custom-packages/$dir" "package/new/"
 done
 
 rm -rf package/new/custom-packages
+
 
 # 显示当前工作目录
 echo -e "${GREEN_COLOR}当前工作目录是：$(pwd)${RES}"
@@ -50,6 +51,16 @@ echo -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
 for dir in $(dirname "$(pwd)")/openwrt/*; do
     echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
 done
+
+# ●●●●●●●●●●●●●●●●●●●●●●●●CGG14修复●●●●●●●●●●●●●●●●●●●●●●●● #
+# 源目录
+src_dir="package/new/openwrt/packages/"
+# 目标目录
+dest_dir="feeds/packages/"
+
+# 使用 rsync 进行复制，同时删除目标目录中在源目录不存在的文件
+rsync -av --delete "$src_dir" "$dest_dir"
+# ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
 
 # 处理snmpd
 ## 检查并复制 net-snmp
