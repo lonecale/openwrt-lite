@@ -58,8 +58,20 @@ src_dir="package/new/openwrt/packages/"
 # 目标目录
 dest_dir="feeds/packages"
 
-# 使用 rsync 进行复制，同时删除目标目录中在源目录不存在的文件
-rsync -avn --delete package/new/openwrt/packages/ feeds/packages/ --stats
+find package/new/openwrt/packages -type d | while read dir; do
+  # 如果当前目录没有子目录（即为低级目录），则进行同步
+  if [ $(find "$dir" -mindepth 1 -type d | wc -l) -eq 0 ]; then
+    # 使用 sed 替换源路径为目标路径
+    target_dir=$(echo "$dir" | sed 's|^package/new/openwrt/packages|feeds/packages|')
+    echo -e "\n${GREEN_COLOR}dir:${RES}"
+    echo "$dir" 
+    echo -e "\n${GREEN_COLOR}target_dir:${RES}"
+    echo "$target_dir" 
+    # 执行 rsync 同步
+    rsync -avn --delete "$dir" "$target_dir"
+  fi
+done
+
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
 
 # 处理snmpd
