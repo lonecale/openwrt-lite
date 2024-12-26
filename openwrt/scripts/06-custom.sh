@@ -64,11 +64,11 @@ find package/new/openwrt/packages -type d | while read dir; do
     # 使用 sed 替换源路径为目标路径
     target_dir=$(echo "$dir" | sed 's|^package/new/openwrt/packages|feeds/packages|')
     echo -e "\n${GREEN_COLOR}dir:${RES}"
-    echo "$dir" 
+    echo "$dir/" 
     echo -e "\n${GREEN_COLOR}target_dir:${RES}"
-    echo "$target_dir" 
+    echo "$target_dir/" 
     # 执行 rsync 同步
-    rsync -av --delete "$dir" "$target_dir"
+    rsync -av --delete "$dir/" "$target_dir/"
   fi
 done
 
