@@ -59,7 +59,7 @@ src_dir="package/new/openwrt/packages/"
 dest_dir="feeds/packages"
 
 # 使用 rsync 进行复制，同时删除目标目录中在源目录不存在的文件
-rsync -avn --delete "$src_dir" "$dest_dir"
+rsync -avn --delete package/new/openwrt/packages/ feeds/packages/
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
 
 # 处理snmpd
