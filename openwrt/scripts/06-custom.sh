@@ -68,7 +68,7 @@ find package/new/openwrt/packages -type d | while read dir; do
     echo -e "\n${GREEN_COLOR}target_dir:${RES}"
     echo "$target_dir" 
     # 执行 rsync 同步
-    rsync -avn --delete "$dir" "$target_dir"
+    rsync -av --delete "$dir" "$target_dir"
   fi
 done
 
