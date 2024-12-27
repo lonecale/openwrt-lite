@@ -48,9 +48,21 @@ for dir in $(dirname "$(pwd)")/openwrt/*; do
     echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
 done
 
+# 显示 /openwrt/package 目录下的所有目录
+echo -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
+for dir in $(dirname "$(pwd)")/openwrt/package/*; do
+    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
+done
+
+# 显示 /openwrt/package 目录下的所有目录
+echo -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
+for dir in $(dirname "$(pwd)")/openwrt/package/*; do
+    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
+done
+
 # ●●●●●●●●●●●●●●●●●●●●●●●●CGG14修复●●●●●●●●●●●●●●●●●●●●●●●● #
-base_dir="/path/to/package/new/openwrt/packages"
-target_base_dir="/path/to/feeds/packages"
+base_dir="package/new/openwrt/packages"
+target_base_dir="feeds/packages"
 
 ############### 调试用
 # 打印源目录 package/new/openwrt/packages/lang/perl/patches 中的文件和目录
@@ -88,10 +100,20 @@ echo -e "\033[0;33m第三次查看目标目录 $target_base_dir/lang/perl/patche
 ls -l "$target_base_dir/lang/perl/patches"
 ############### 调试用
 
+[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf feeds/packages/libs/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue feeds/packages/libs/libimobiledevice-glue
+[ -e "../master/packages/libs/libtatsu" ] && rm -rf feeds/packages/libs/libtatsu && cp -a ../master/packages/libs/libtatsu feeds/packages/libs/libtatsu
+[ -e "../master/packages/lang/luajit2" ] && rm -rf feeds/packages/lang/luajit2 && cp -a ../master/packages/lang/luajit2 feeds/packages/lang/luajit2
 
-[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
-[ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
-[ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
+# 检查是否所有目录都已成功复制
+if [ -d "feeds/packages/libs/libimobiledevice-glue" ] && [ -d "feeds/packages/libs/libtatsu" ] && [ -d "feeds/packages/lang/luajit2" ]; then
+    echo "所有目录已成功复制。"
+else
+    echo "一个或多个目录复制失败。"
+fi
+
+# [ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
+# [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
+# [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
 
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
@@ -217,8 +239,8 @@ cat package/new/default-settings/default/zzz-default-settings
 echo -e "${GREEN_COLOR}End of modified zzz-default-settings output.${RES}\n"
 
 # 更改默认主题
-echo -e "${GREEN_COLOR}\ncat feeds/luci/collections/luci/Makefile:${RES}"
-cat feeds/luci/collections/luci/Makefile
+# echo -e "${GREEN_COLOR}\ncat feeds/luci/collections/luci/Makefile:${RES}"
+# cat feeds/luci/collections/luci/Makefile
 # sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # 更改菜单位置
