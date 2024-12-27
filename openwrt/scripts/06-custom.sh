@@ -57,9 +57,30 @@ done
 src_dir="package/new/openwrt/packages"
 dest_dir="feeds/packages"
 
+############### 调试用
+# 打印源目录 package/new/openwrt/packages/lang/perl/patches 中的文件和目录
+echo "第一次查看源目录 $src_dir/lang/perl/patches 内容："
+ls -lR "$src_dir/lang/perl/patches"
+
+# 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
+echo "第一次查看目标目录 $dest_dir/lang/perl/patches 内容："
+ls -lR "$dest_dir/lang/perl/patches"
+############### 调试用
+
 # 从源目录复制文件到目标目录
 echo "复制文件从 $src_dir 到 $dest_dir"
 cp -r "$src_dir/"* "$dest_dir/"
+
+
+############### 调试用
+# 打印源目录 package/new/openwrt/packages/lang/perl/patches 中的文件和目录
+echo "第二次查看源目录 $src_dir/lang/perl/patches 内容："
+ls -lR "$src_dir/lang/perl/patches"
+
+# 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
+echo "第二次查看目标目录 $dest_dir/lang/perl/patches 内容："
+ls -lR "$dest_dir/lang/perl/patches"
+############### 调试用
 
 # 切换到源目录
 pushd "$src_dir"
