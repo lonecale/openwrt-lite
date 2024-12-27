@@ -76,7 +76,6 @@ echo "查看目标目录 $dest_dir/lang 内容："
 ls -lR "$dest_dir/lang"
 
 
-# 切换到源目录
 # 遍历源目录中的所有文件和目录
 find . -type d | while read src_subdir; do
     # 构造目标目录中对应的子目录路径
@@ -91,7 +90,13 @@ find . -type d | while read src_subdir; do
         # 在目标子目录中查找多余的文件和目录，如果它们不在源子目录中，则删除它们
         find "$dest_subdir" -mindepth 1 | while read dest_item; do
             # 直接构造源路径
-            src_item="$src_dir/$src_subdir/$dest_item"
+            dest_item=$(echo "$dest_item" | sed 's/^\.\///')
+            # 如果是 .git 目录，跳过
+            if [[ "$dest_item" == .git* ]]; then
+                echo "跳过 .git 目录或文件: $dest_item"
+                continue
+            fi
+            src_item="$src_dir/$src_subdir/$dest_item"  # 目标目录对应的路径
             echo "源路径: $src_item, 目标路径: $dest_item"
             
             # 调试信息: 查看源路径是否存在
@@ -110,7 +115,6 @@ find . -type d | while read src_subdir; do
         echo "目标子目录不存在: $dest_subdir"
     fi
 done
-# 返回到原来的目录
 
 
 ############### 调试用
