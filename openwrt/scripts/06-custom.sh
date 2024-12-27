@@ -16,10 +16,6 @@ rm -rf feeds/luci/applications/{luci-app-smartdns}
 rm -rf feeds/packages/net/{adguardhome,smartdns}
 rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,netdata,luci-app-netdata,luci-app-argon-config,oaf,open-app-filter,luci-app-oaf}
 
-# rm -rf feeds/packages/net/smartdns feeds/luci/applications/luci-app-smartdns package/new/extd/smartdns package/new/extd/luci-app-smartdns
-# rm -rf feeds/packages/net/adguardhome package/new/extd/adguardhome package/new/extd/luci-app-adguardhome
-# rm -rf package/new/extd/luci-app-netdata
-
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
 dirs=(openwrt smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf)
@@ -60,17 +56,16 @@ dest_dir="feeds/packages"
 ############### 调试用
 # 打印源目录 package/new/openwrt/packages/lang/perl/patches 中的文件和目录
 echo "第一次查看源目录 $src_dir/lang/perl/patches 内容："
-ls -lR "$src_dir/lang/perl/patches"
+ls -l "$src_dir/lang/perl/patches"
 
 # 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
 echo "第一次查看目标目录 $dest_dir/lang/perl/patches 内容："
-ls -lR "$dest_dir/lang/perl/patches"
+ls -l "$dest_dir/lang/perl/patches"
 ############### 调试用
 
 # 从源目录复制文件到目标目录
 echo "复制文件从 $src_dir 到 $dest_dir"
 cp -r "$src_dir/"* "$dest_dir/"
-
 
 ############### 调试用
 # 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
@@ -82,7 +77,6 @@ ls -lR "$dest_dir/lang"
 
 
 # 切换到源目录
-pushd "$src_dir"
 # 遍历源目录中的所有文件和目录
 find . -type d | while read src_subdir; do
     # 构造目标目录中对应的子目录路径
@@ -122,14 +116,13 @@ done
 ############### 调试用
 # 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
 echo "第三次查看目标目录 $dest_dir/lang/perl/patches 内容："
-ls -lR "$dest_dir/lang/perl/patches"
+ls -l "$dest_dir/lang/perl/patches"
 ############### 调试用
 
-popd
 
-[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libs/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libs/libimobiledevice-glue
-[ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libs/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libs/libtatsu
-[ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/lang/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/lang/luajit2
+[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
+[ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
+[ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
 
 
 # find package/new/openwrt/packages -type d | while read dir; do
