@@ -82,7 +82,7 @@ done < "$base_dir/directory_list.txt"
 
 [ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
 [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
-[ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
+# [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
 
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
