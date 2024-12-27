@@ -53,24 +53,52 @@ for dir in $(dirname "$(pwd)")/openwrt/*; do
 done
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●CGG14修复●●●●●●●●●●●●●●●●●●●●●●●● #
-# 源目录
-src_dir="package/new/openwrt/packages/"
-# 目标目录
+# 源目录和目标目录
+src_dir="package/new/openwrt/packages"
 dest_dir="feeds/packages"
 
-find package/new/openwrt/packages -type d | while read dir; do
-  # 如果当前目录没有子目录（即为低级目录），则进行同步
-  if [ $(find "$dir" -mindepth 1 -type d | wc -l) -eq 0 ]; then
-    # 使用 sed 替换源路径为目标路径
-    target_dir=$(echo "$dir" | sed 's|^package/new/openwrt/packages|feeds/packages|')
-    echo -e "\n${GREEN_COLOR}dir:${RES}"
-    echo "$dir/" 
-    echo -e "\n${GREEN_COLOR}target_dir:${RES}"
-    echo "$target_dir/" 
-    # 执行 rsync 同步
-    rsync -av --delete "$dir/" "$target_dir/"
-  fi
+# 从源目录复制文件到目标目录
+cp -r "$src_dir/"* "$dest_dir/"
+
+# 切换到源目录
+pushd "$src_dir"
+# 遍历源目录中的所有文件和目录
+find . -type d | while read src_subdir; do
+    # 构造目标目录中对应的子目录路径
+    dest_subdir="$dest_dir/$src_subdir"
+
+    # 如果目标子目录存在
+    if [ -d "$dest_subdir" ]; then
+        # 在目标子目录中查找多余的文件和目录，如果它们不在源子目录中，则删除它们
+        find "$dest_subdir" -mindepth 1 | while read dest_item; do
+            # 从目标路径生成源路径
+            relative_path="${dest_item#$dest_subdir/}"
+            src_item="$src_dir/$src_subdir/$relative_path"
+            if [ ! -e "$src_item" ]; then
+                echo "删除: $dest_item"
+                rm -rf "$dest_item"
+            fi
+        done
+    fi
 done
+# 返回到原来的目录
+popd
+
+echo "同步和清理完成。"
+
+# find package/new/openwrt/packages -type d | while read dir; do
+  # 如果当前目录没有子目录（即为低级目录），则进行同步
+  #if [ $(find "$dir" -mindepth 1 -type d | wc -l) -eq 0 ]; then
+    # 使用 sed 替换源路径为目标路径
+    #target_dir=$(echo "$dir" | sed 's|^package/new/openwrt/packages|feeds/packages|')
+    #echo -e "\n${GREEN_COLOR}dir:${RES}"
+    #echo "$dir/" 
+    #echo -e "\n${GREEN_COLOR}target_dir:${RES}"
+    #echo "$target_dir/" 
+    # 执行 rsync 同步
+    #rsync -av --delete "$dir/" "$target_dir/"
+  #fi
+#done
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
 
