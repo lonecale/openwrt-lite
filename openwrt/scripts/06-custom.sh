@@ -73,10 +73,6 @@ cp -r "$src_dir/"* "$dest_dir/"
 
 
 ############### 调试用
-# 打印源目录 package/new/openwrt/packages/lang/perl/patches 中的文件和目录
-echo "第二次查看源目录 $src_dir/lang/perl/patches 内容："
-ls -lR "$src_dir/lang/perl/patches"
-
 # 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
 echo "第二次查看目标目录 $dest_dir/lang/perl/patches 内容："
 ls -lR "$dest_dir/lang/perl/patches"
@@ -87,7 +83,9 @@ pushd "$src_dir"
 # 遍历源目录中的所有文件和目录
 find . -type d | while read src_subdir; do
     # 构造目标目录中对应的子目录路径
-    dest_subdir="$dest_dir/$src_subdir"
+    # 去掉路径中的 ./ 部分
+    src_subdir=$(echo "$src_subdir" | sed 's/^\.\///')
+    dest_subdir="$dest_dir/$src_subdir"  # 目标目录对应的路径
     echo "检查源子目录: $src_subdir 对应目标子目录: $dest_subdir"
 
     # 如果目标子目录存在
@@ -96,7 +94,7 @@ find . -type d | while read src_subdir; do
         # 在目标子目录中查找多余的文件和目录，如果它们不在源子目录中，则删除它们
         find "$dest_subdir" -mindepth 1 | while read dest_item; do
             # 直接构造源路径
-            src_item="$src_dir/$src_subdir/$(basename "$dest_item")"
+            src_item="$src_dir/$src_subdir/$dest_item"
             echo "源路径: $src_item, 目标路径: $dest_item"
             
             # 调试信息: 查看源路径是否存在
@@ -116,12 +114,34 @@ find . -type d | while read src_subdir; do
     fi
 done
 # 返回到原来的目录
+
+
+############### 调试用
+# 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
+echo "第三次查看目标目录 $dest_dir/lang/perl/patches 内容："
+ls -lR "$dest_dir/lang/perl/patches"
+############### 调试用
+
 popd
 
+
 [ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
-[ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/lang/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/lang/luajit2
+# [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/lang/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/lang/luajit2
 
-
+if [ -e "../master/packages/lang/luajit2" ]; then
+    # 移动操作
+    rm -rf package/feeds/packages/lang/luajit2
+    cp -a ../master/packages/lang/luajit2 package/feeds/packages/lang/luajit2
+    
+    # 检查目标路径是否存在
+    if [ -e "package/feeds/packages/lang/luajit2" ]; then
+        echo "目标路径已成功移动: package/feeds/packages/lang/luajit2"
+    else
+        echo "目标路径移动失败: package/feeds/packages/lang/luajit2"
+    fi
+else
+    echo "源路径不存在: ../master/packages/lang/luajit2"
+fi
 
 echo "同步和清理完成。"
 
