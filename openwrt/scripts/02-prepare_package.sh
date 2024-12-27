@@ -42,10 +42,10 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
     fi
     curl -Lso files/etc/mihomo/run/geoip.metadb https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.metadb
     curl -Lso files/etc/mihomo/run/ASN.mmdb https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb
-    curl -Lso zashboard-gh-pages.zip https://$github/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip
-    unzip zashboard-gh-pages.zip
-    rm -f zashboard-gh-pages.zip
-    mv zashboard-gh-pages files/etc/mihomo/run/ui/zashboard
+    curl -Lso dist.zip https://$github/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip
+    unzip dist.zip
+    rm -f dist.zip
+    mv dist files/etc/mihomo/run/ui/zashboard
 fi
 
 # net-snmp & collectd & rrdtool1 - bump version
