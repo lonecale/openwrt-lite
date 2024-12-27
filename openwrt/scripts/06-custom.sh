@@ -75,9 +75,13 @@ ls -l "$dest_dir/lang/perl/patches"
 echo "查看目标目录 $dest_dir/lang 内容："
 ls -l "$dest_dir/lang"
 
-
 # 遍历源目录中的所有文件和目录
 find "$src_dir" -type d | while read src_subdir; do
+    # 跳过源目录本身
+    if [[ "$src_subdir" == "$src_dir" ]]; then
+        continue
+    fi
+    
     # 去掉路径中的 $src_dir 部分，得到相对路径
     src_subdir_rel=$(echo "$src_subdir" | sed "s|^$src_dir/||")
     dest_subdir="$dest_dir/$src_subdir_rel"  # 构造目标目录对应的路径
@@ -92,26 +96,36 @@ find "$src_dir" -type d | while read src_subdir; do
     # 如果目标子目录存在
     if [ -d "$dest_subdir" ]; then
         echo "目标子目录存在: $dest_subdir"
-        # 在目标子目录中查找多余的文件和目录，如果它们不在源子目录中，则删除它们
-        find "$dest_subdir" -mindepth 1 | while read dest_item; do
-            # 去掉目标路径的前缀部分，得到相对路径
-            dest_item_rel=$(echo "$dest_item" | sed "s|^$dest_subdir/||")
-            src_item="$src_dir/$dest_item_rel"  # 直接使用源目录和目标的相对路径
 
-            echo "源路径: $src_item, 目标路径: $dest_item"
-            
-            # 调试信息: 查看源路径是否存在
-            if [ -e "$src_item" ]; then
-                echo "源路径存在: $src_item"
-            else
-                echo "源路径不存在: $src_item"
-            fi
-            
-            if [ ! -e "$src_item" ]; then
-                echo "删除: $dest_item"
-                rm -rf "$dest_item"
-            fi
-        done
+        # 判断目标路径中的文件夹是否在源路径中存在
+        if [ -d "$src_dir/$src_subdir_rel" ]; then
+            echo "源路径存在: $src_dir/$src_subdir_rel"
+
+            # 在目标目录中查找多余的文件和目录，如果它们不在源子目录中，则删除它们
+            find "$dest_subdir" -mindepth 1 | while read dest_item; do
+                # 去掉目标路径的前缀部分，得到相对路径
+                dest_item_rel=$(echo "$dest_item" | sed "s|^$dest_subdir/||")
+                src_item="$src_dir/$dest_item_rel"  # 直接使用源目录和目标的相对路径
+
+                echo "源路径: $src_item, 目标路径: $dest_item"
+                
+                # 判断源路径中的文件是否存在
+                if [ -e "$src_item" ]; then
+                    echo "源路径存在: $src_item"
+                else
+                    echo "源路径不存在: $src_item"
+                fi
+                
+                # 目标路径中的文件/目录如果不在源路径中，则删除
+                if [ ! -e "$src_item" ]; then
+                    echo "删除目标路径中的文件/目录: $dest_item"
+                    rm -rf "$dest_item"
+                fi
+            done
+        else
+            echo "源路径不存在: $src_dir/$src_subdir_rel"
+            # 如果目标子目录存在而源路径中没有相应的目录，则不做删除
+        fi
     else
         echo "目标子目录不存在: $dest_subdir"
     fi
