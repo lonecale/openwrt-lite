@@ -84,6 +84,11 @@ done
 # 返回到原来的目录
 popd
 
+[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
+[ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/lang/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/lang/luajit2
+
+
+
 echo "同步和清理完成。"
 
 # find package/new/openwrt/packages -type d | while read dir; do
