@@ -124,20 +124,20 @@ ls -lR "$dest_dir/lang/perl/patches"
 
 popd
 
-
-[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
-# [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/lang/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/lang/luajit2
+[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf feeds/packages/libs/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue feeds/packages/libs/libimobiledevice-glue
+[ -e "../master/packages/libs/libtatsu" ] && rm -rf feeds/packages/libs/libtatsu && cp -a ../master/packages/libs/libtatsu feeds/packages/libs/libtatsu
+# [ -e "../master/packages/lang/luajit2" ] && rm -rf feeds/packages/lang/luajit2 && cp -a ../master/packages/lang/luajit2 feeds/packages/lang/luajit2
 
 if [ -e "../master/packages/lang/luajit2" ]; then
     # 移动操作
-    rm -rf package/feeds/packages/lang/luajit2
-    cp -a ../master/packages/lang/luajit2 package/feeds/packages/lang/luajit2
+    rm -rf feeds/packages/lang/luajit2
+    cp -a ../master/packages/lang/luajit2 feeds/packages/lang/luajit2
     
     # 检查目标路径是否存在
-    if [ -e "package/feeds/packages/lang/luajit2" ]; then
-        echo "目标路径已成功移动: package/feeds/packages/lang/luajit2"
+    if [ -e "feeds/packages/lang/luajit2" ]; then
+        echo "目标路径已成功移动: feeds/packages/lang/luajit2"
     else
-        echo "目标路径移动失败: package/feeds/packages/lang/luajit2"
+        echo "目标路径移动失败: feeds/packages/lang/luajit2"
     fi
 else
     echo "源路径不存在: ../master/packages/lang/luajit2"
