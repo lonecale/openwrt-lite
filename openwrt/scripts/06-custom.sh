@@ -31,48 +31,30 @@ rm -rf package/new/custom-packages
 echo -e "${GREEN_COLOR}当前工作目录是：$(pwd)${RES}"
 
 # 显示当前目录的上一级目录下的所有目录
-echo -e "${GREEN_COLOR}当前目录的上一级目录下有以下目录：${RES}"
+echo -n -e "${GREEN_COLOR}当前目录的上一级目录下有以下目录：${RES}"
 for dir in $(dirname "$(pwd)")/*; do
-    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
+    echo -n -e "${GREEN_COLOR}$(basename "$dir")${RES} "
 done
+echo ""  # 输出换行
 
 # 显示 /master 目录下的所有目录
-echo -e "${GREEN_COLOR}/master 目录下有以下目录：${RES}"
+echo -n -e "${GREEN_COLOR}/master 目录下有以下目录：${RES}"
 for dir in $(dirname "$(pwd)")/master/*; do
-    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
+    echo -n -e "${GREEN_COLOR}$(basename "$dir")${RES} "
 done
+echo ""
 
 # 显示 /openwrt 目录下的所有目录
-echo -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
+echo -n -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
 for dir in $(dirname "$(pwd)")/openwrt/*; do
-    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
+    echo -n -e "${GREEN_COLOR}$(basename "$dir")${RES} "
 done
+echo ""
 
-# 显示 /openwrt/package 目录下的所有目录
-echo -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
-for dir in $(dirname "$(pwd)")/openwrt/package/*; do
-    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
-done
-
-# 显示 /openwrt/package 目录下的所有目录
-echo -e "${GREEN_COLOR}/openwrt 目录下有以下目录：${RES}"
-for dir in $(dirname "$(pwd)")/openwrt/package/*; do
-    echo -e "${GREEN_COLOR}$(basename "$dir")${RES}"
-done
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●CGG14修复●●●●●●●●●●●●●●●●●●●●●●●● #
 base_dir="package/new/openwrt/packages"
 target_base_dir="feeds/packages"
-
-############### 调试用
-# 打印源目录 package/new/openwrt/packages/lang/perl/patches 中的文件和目录
-echo -e "\033[0;33m第一次查看源目录 $base_dir/lang/perl/patches 内容：\033[0m"
-ls -l "$base_dir/lang/perl/patches"
-
-# 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
-echo -e "\033[0;33m第一次查看目标目录 $target_base_dir/lang/perl/patches 内容：\033[0m"
-ls -l "$target_base_dir/lang/perl/patches"
-############### 调试用
 
 # 读取目录列表文件
 while IFS= read -r line; do
@@ -98,12 +80,6 @@ while IFS= read -r line; do
   fi
 done < "$base_dir/directory_list.txt"
 
-############### 调试用
-# 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
-echo -e "\033[0;33m第三次查看目标目录 $target_base_dir/lang/perl/patches 内容：\033[0m"
-ls -l "$target_base_dir/lang/perl/patches"
-############### 调试用
-
 [ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
 [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
 [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
@@ -121,7 +97,7 @@ ls -l "$target_base_dir/lang/perl/patches"
 ## 检查并复制 collectd
 # [ -e "../master/packages/utils/collectd" ] && rm -rf feeds/packages/utils/collectd && cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
 ## 检查并复制 luci-app-statistics
-# [ -e "../master/luci/applications/luci-app-statistics" ] && rm -rf feeds/luci/applications/luci-app-statistics && cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
+[ -e "../master/luci/applications/luci-app-statistics" ] && rm -rf feeds/luci/applications/luci-app-statistics && cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
 
 # 处理openssh
 ## 检查并复制 openssh
@@ -196,7 +172,7 @@ uci commit network
 [ -e "/usr/bin/luckyarch" ] && chmod 755 /usr/bin/luckyarch
 # 处理AdGuardHome核心
 [ -e "/usr/bin/AdGuardHome" ] && mv /usr/bin/AdGuardHome /usr/bin/AdGuardHome_temp && mkdir /usr/bin/AdGuardHome && mv /usr/bin/AdGuardHome_temp /usr/bin/AdGuardHome/AdGuardHome && chmod 755 /usr/bin/AdGuardHome/AdGuardHome
-[ -e "/usr/share/AdGuardHome/addhost.sh" ] && chmod 755 /usr/share/AdGuardHome/addhost.sh
+[ -d "/usr/share/AdGuardHome" ] && chmod -R 755 /usr/share/AdGuardHome
 
 EOF
 
