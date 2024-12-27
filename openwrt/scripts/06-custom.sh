@@ -58,6 +58,7 @@ src_dir="package/new/openwrt/packages"
 dest_dir="feeds/packages"
 
 # 从源目录复制文件到目标目录
+echo "复制文件从 $src_dir 到 $dest_dir"
 cp -r "$src_dir/"* "$dest_dir/"
 
 # 切换到源目录
@@ -66,19 +67,32 @@ pushd "$src_dir"
 find . -type d | while read src_subdir; do
     # 构造目标目录中对应的子目录路径
     dest_subdir="$dest_dir/$src_subdir"
+    echo "检查源子目录: $src_subdir 对应目标子目录: $dest_subdir"
 
     # 如果目标子目录存在
     if [ -d "$dest_subdir" ]; then
+        echo "目标子目录存在: $dest_subdir"
         # 在目标子目录中查找多余的文件和目录，如果它们不在源子目录中，则删除它们
         find "$dest_subdir" -mindepth 1 | while read dest_item; do
             # 从目标路径生成源路径
             relative_path="${dest_item#$dest_subdir/}"
             src_item="$src_dir/$src_subdir/$relative_path"
+            echo "源路径: $src_item, 目标路径: $dest_item"
+            
+            # 调试信息: 查看源路径是否存在
+            if [ -e "$src_item" ]; then
+                echo "源路径存在: $src_item"
+            else
+                echo "源路径不存在: $src_item"
+            fi
+            
             if [ ! -e "$src_item" ]; then
                 echo "删除: $dest_item"
                 rm -rf "$dest_item"
             fi
         done
+    else
+        echo "目标子目录不存在: $dest_subdir"
     fi
 done
 # 返回到原来的目录
