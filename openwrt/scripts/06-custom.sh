@@ -70,33 +70,34 @@ cp -r "$src_dir/"* "$dest_dir/"
 ############### 调试用
 # 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
 echo "第二次查看目标目录 $dest_dir/lang/perl/patches 内容："
-ls -lR "$dest_dir/lang/perl/patches"
+ls -l "$dest_dir/lang/perl/patches"
 ############### 调试用
 echo "查看目标目录 $dest_dir/lang 内容："
-ls -lR "$dest_dir/lang"
+ls -l "$dest_dir/lang"
 
 
 # 遍历源目录中的所有文件和目录
-find . -type d | while read src_subdir; do
-    # 构造目标目录中对应的子目录路径
-    # 去掉路径中的 ./ 部分
-    src_subdir=$(echo "$src_subdir" | sed 's/^\.\///')
-    dest_subdir="$dest_dir/$src_subdir"  # 目标目录对应的路径
-    echo "检查源子目录: $src_subdir 对应目标子目录: $dest_subdir"
+find "$src_dir" -type d | while read src_subdir; do
+    # 去掉路径中的 $src_dir 部分，得到相对路径
+    src_subdir_rel=$(echo "$src_subdir" | sed "s|^$src_dir/||")
+    dest_subdir="$dest_dir/$src_subdir_rel"  # 构造目标目录对应的路径
+    echo "检查源子目录: $src_subdir_rel 对应目标子目录: $dest_subdir"
+
+    # 如果目标子目录是 .git 目录，跳过
+    if [[ "$dest_subdir" == *".git"* ]]; then
+        echo "跳过 .git 目录或文件: $dest_subdir"
+        continue
+    fi
 
     # 如果目标子目录存在
     if [ -d "$dest_subdir" ]; then
         echo "目标子目录存在: $dest_subdir"
         # 在目标子目录中查找多余的文件和目录，如果它们不在源子目录中，则删除它们
         find "$dest_subdir" -mindepth 1 | while read dest_item; do
-            # 直接构造源路径
-            dest_item=$(echo "$dest_item" | sed 's/^\.\///')
-            # 如果是 .git 目录，跳过
-            if [[ "$dest_item" == .git* ]]; then
-                echo "跳过 .git 目录或文件: $dest_item"
-                continue
-            fi
-            src_item="$src_dir/$src_subdir/$dest_item"  # 目标目录对应的路径
+            # 去掉目标路径的前缀部分，得到相对路径
+            dest_item_rel=$(echo "$dest_item" | sed "s|^$dest_subdir/||")
+            src_item="$src_dir/$dest_item_rel"  # 直接使用源目录和目标的相对路径
+
             echo "源路径: $src_item, 目标路径: $dest_item"
             
             # 调试信息: 查看源路径是否存在
