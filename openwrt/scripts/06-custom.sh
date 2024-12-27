@@ -276,7 +276,8 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
     mkdir ./core && cd ./core
     curl -sfL -o ./meta.tar.gz "$CORE_MATE" && tar -zxf ./meta.tar.gz && mv ./clash ./clash_meta
     chmod +x ./clash* ; rm -rf ./*.gz
-    cd .. && find . -print
+    # cd .. && find . -print
+    cd .. 
     sed -i 's|option geo_custom_url.*|option geo_custom_url '\''https://github.com/xream/geoip/releases/latest/download/ipinfo.country.mmdb'\''|' ../config/openclash
     sed -i 's|option geosite_custom_url.*|option geosite_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat'\''|' ../config/openclash
     sed -i 's|option geoip_custom_url.*|option geoip_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'\''|' ../config/openclash
