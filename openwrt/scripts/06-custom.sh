@@ -77,6 +77,10 @@ ls -l "$target_base_dir/lang/perl/patches"
 # 读取目录列表文件
 while IFS= read -r line; do
   if [[ -n "$line" ]]; then  # 检查行是否为空
+    if [[ "$line" == "net/nginx" ]]; then
+      echo -e "\033[0;33mSkipping sync for $line\033[0m"
+      continue  # 跳过此循环迭代
+    fi
     src_dir="$base_dir/$line"
     dest_dir="$target_base_dir/$line"
 
@@ -100,20 +104,9 @@ echo -e "\033[0;33m第三次查看目标目录 $target_base_dir/lang/perl/patche
 ls -l "$target_base_dir/lang/perl/patches"
 ############### 调试用
 
-[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf feeds/packages/libs/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue feeds/packages/libs/libimobiledevice-glue
-[ -e "../master/packages/libs/libtatsu" ] && rm -rf feeds/packages/libs/libtatsu && cp -a ../master/packages/libs/libtatsu feeds/packages/libs/libtatsu
-[ -e "../master/packages/lang/luajit2" ] && rm -rf feeds/packages/lang/luajit2 && cp -a ../master/packages/lang/luajit2 feeds/packages/lang/luajit2
-
-# 检查是否所有目录都已成功复制
-if [ -d "feeds/packages/libs/libimobiledevice-glue" ] && [ -d "feeds/packages/libs/libtatsu" ] && [ -d "feeds/packages/lang/luajit2" ]; then
-    echo "所有目录已成功复制。"
-else
-    echo "一个或多个目录复制失败。"
-fi
-
-# [ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
-# [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
-# [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
+[ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
+[ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
+[ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
 
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
