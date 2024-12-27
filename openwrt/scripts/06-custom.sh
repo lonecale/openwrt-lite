@@ -75,6 +75,16 @@ ls -l "$dest_dir/lang/perl/patches"
 echo "查看目标目录 $dest_dir/lang 内容："
 ls -l "$dest_dir/lang"
 
+# 检查某个目录在源路径中是否存在
+check_dir_exists() {
+    local dir_path="$1"
+    if [ -d "$dir_path" ]; then
+        return 0  # 目录存在
+    else
+        return 1  # 目录不存在
+    fi
+}
+
 # 遍历源目录中的所有文件和目录
 find "$src_dir" -type d | while read src_subdir; do
     # 跳过源目录本身
@@ -98,10 +108,10 @@ find "$src_dir" -type d | while read src_subdir; do
         echo "目标子目录存在: $dest_subdir"
 
         # 判断目标路径中的文件夹是否在源路径中存在
-        if [ -d "$src_dir/$src_subdir_rel" ]; then
+        if check_dir_exists "$src_dir/$src_subdir_rel"; then
             echo "源路径存在: $src_dir/$src_subdir_rel"
 
-            # 在目标目录中查找多余的文件和目录，如果它们不在源子目录中，则删除它们
+            # 遍历目标目录下的每一个文件/目录
             find "$dest_subdir" -mindepth 1 | while read dest_item; do
                 # 去掉目标路径的前缀部分，得到相对路径
                 dest_item_rel=$(echo "$dest_item" | sed "s|^$dest_subdir/||")
@@ -130,8 +140,6 @@ find "$src_dir" -type d | while read src_subdir; do
         echo "目标子目录不存在: $dest_subdir"
     fi
 done
-
-
 ############### 调试用
 # 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
 echo "第三次查看目标目录 $dest_dir/lang/perl/patches 内容："
