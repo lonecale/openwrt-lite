@@ -49,101 +49,43 @@ for dir in $(dirname "$(pwd)")/openwrt/*; do
 done
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●CGG14修复●●●●●●●●●●●●●●●●●●●●●●●● #
-# 源目录和目标目录
-src_dir="package/new/openwrt/packages"
-dest_dir="feeds/packages"
+base_dir="/path/to/package/new/openwrt/packages"
+target_base_dir="/path/to/feeds/packages"
 
 ############### 调试用
 # 打印源目录 package/new/openwrt/packages/lang/perl/patches 中的文件和目录
-echo "第一次查看源目录 $src_dir/lang/perl/patches 内容："
-ls -l "$src_dir/lang/perl/patches"
+echo -e "\033[0;33m第一次查看源目录 $base_dir/lang/perl/patches 内容：\033[0m"
+ls -l "$base_dir/lang/perl/patches"
 
 # 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
-echo "第一次查看目标目录 $dest_dir/lang/perl/patches 内容："
-ls -l "$dest_dir/lang/perl/patches"
+echo -e "\033[0;33m第一次查看目标目录 $target_base_dir/lang/perl/patches 内容：\033[0m"
+ls -l "$target_base_dir/lang/perl/patches"
 ############### 调试用
 
-# 从源目录复制文件到目标目录
-echo "复制文件从 $src_dir 到 $dest_dir"
-cp -r "$src_dir/"* "$dest_dir/"
+# 读取目录列表文件
+while IFS= read -r line; do
+  if [[ -n "$line" ]]; then  # 检查行是否为空
+    src_dir="$base_dir/$line"
+    dest_dir="$target_base_dir/$line"
 
-############### 调试用
-# 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
-echo "第二次查看目标目录 $dest_dir/lang/perl/patches 内容："
-ls -l "$dest_dir/lang/perl/patches"
-############### 调试用
-echo "查看目标目录 $dest_dir/lang 内容："
-ls -l "$dest_dir/lang"
-
-# 检查某个目录在源路径中是否存在
-check_dir_exists() {
-    local dir_path="$1"
-    if [ -d "$dir_path" ]; then
-        return 0  # 目录存在
+    # 检查源目录是否存在
+    if [[ -d "$src_dir" ]]; then
+      echo -e "\033[0;32m开始同步：$src_dir 到 $dest_dir\033[0m"
+      rsync -av --delete "$src_dir/" "$dest_dir/" || {
+        echo -e "\033[0;31m同步失败：$src_dir 到 $dest_dir\033[0m" >&2
+        continue  # 发生错误时跳过当前循环
+      }
+      echo -e "\033[0;32m完成同步：$src_dir 到 $dest_dir\033[0m"
     else
-        return 1  # 目录不存在
+      echo -e "\033[0;31m源目录不存在：$src_dir\033[0m" >&2
     fi
-}
+  fi
+done < "$base_dir/directory_list.txt"
 
-# 遍历源目录中的所有文件和目录
-find "$src_dir" -type d | while read src_subdir; do
-    # 跳过源目录本身
-    if [[ "$src_subdir" == "$src_dir" ]]; then
-        continue
-    fi
-    
-    # 去掉路径中的 $src_dir 部分，得到相对路径
-    src_subdir_rel=$(echo "$src_subdir" | sed "s|^$src_dir/||")
-    dest_subdir="$dest_dir/$src_subdir_rel"  # 构造目标目录对应的路径
-    echo "检查源子目录: $src_subdir_rel 对应目标子目录: $dest_subdir"
-
-    # 如果目标子目录是 .git 目录，跳过
-    if [[ "$dest_subdir" == *".git"* ]]; then
-        echo "跳过 .git 目录或文件: $dest_subdir"
-        continue
-    fi
-
-    # 如果目标子目录存在
-    if [ -d "$dest_subdir" ]; then
-        echo "目标子目录存在: $dest_subdir"
-
-        # 判断目标路径中的文件夹是否在源路径中存在
-        if check_dir_exists "$src_dir/$src_subdir_rel"; then
-            echo "源路径存在: $src_dir/$src_subdir_rel"
-
-            # 遍历目标目录下的每一个文件/目录
-            find "$dest_subdir" -mindepth 1 | while read dest_item; do
-                # 去掉目标路径的前缀部分，得到相对路径
-                dest_item_rel=$(echo "$dest_item" | sed "s|^$dest_subdir/||")
-                src_item="$src_dir/$dest_item_rel"  # 直接使用源目录和目标的相对路径
-
-                echo "源路径: $src_item, 目标路径: $dest_item"
-                
-                # 判断源路径中的文件是否存在
-                if [ -e "$src_item" ]; then
-                    echo "源路径存在: $src_item"
-                else
-                    echo "源路径不存在: $src_item"
-                fi
-                
-                # 目标路径中的文件/目录如果不在源路径中，则删除
-                if [ ! -e "$src_item" ]; then
-                    echo "删除目标路径中的文件/目录: $dest_item"
-                    rm -rf "$dest_item"
-                fi
-            done
-        else
-            echo "源路径不存在: $src_dir/$src_subdir_rel"
-            # 如果目标子目录存在而源路径中没有相应的目录，则不做删除
-        fi
-    else
-        echo "目标子目录不存在: $dest_subdir"
-    fi
-done
 ############### 调试用
 # 打印目标目录 feeds/packages/lang/perl/patches 中的文件和目录
-echo "第三次查看目标目录 $dest_dir/lang/perl/patches 内容："
-ls -l "$dest_dir/lang/perl/patches"
+echo -e "\033[0;33m第三次查看目标目录 $target_base_dir/lang/perl/patches 内容：\033[0m"
+ls -l "$target_base_dir/lang/perl/patches"
 ############### 调试用
 
 
@@ -151,20 +93,6 @@ ls -l "$dest_dir/lang/perl/patches"
 [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
 [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
 
-
-# find package/new/openwrt/packages -type d | while read dir; do
-  # 如果当前目录没有子目录（即为低级目录），则进行同步
-  #if [ $(find "$dir" -mindepth 1 -type d | wc -l) -eq 0 ]; then
-    # 使用 sed 替换源路径为目标路径
-    #target_dir=$(echo "$dir" | sed 's|^package/new/openwrt/packages|feeds/packages|')
-    #echo -e "\n${GREEN_COLOR}dir:${RES}"
-    #echo "$dir/" 
-    #echo -e "\n${GREEN_COLOR}target_dir:${RES}"
-    #echo "$target_dir/" 
-    # 执行 rsync 同步
-    #rsync -av --delete "$dir/" "$target_dir/"
-  #fi
-#done
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
 
