@@ -175,7 +175,7 @@ uci commit network
 EOF
 
 # 更改默认主题(未测试)
-# echo "uci set luci.main.mediaurlbase=/luci-static/kucat" >> $DEFAULT_SETTINGS
+echo "uci set luci.main.mediaurlbase=/luci-static/kucat" >> $DEFAULT_SETTINGS
 
 # 修改退出命令到最后
 sed -i '/exit 0/d' $DEFAULT_SETTINGS && echo "exit 0" >> $DEFAULT_SETTINGS
