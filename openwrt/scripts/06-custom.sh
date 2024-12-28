@@ -105,8 +105,6 @@ done < "$base_dir/directory_list.txt"
 
 
 # init
-# 修改Lan IP
-# sed -i "s/$LAN/10.0.0.1/g" package/base-files/files/bin/config_generate
 
 # 检查文件是否存在，并输出其内容
 if [ -f "package/new/default-settings/default/zzz-default-settings" ]; then
@@ -176,6 +174,9 @@ uci commit network
 
 EOF
 
+# 更改默认主题(未测试)
+# echo "uci set luci.main.mediaurlbase=/luci-static/kucat" >> $DEFAULT_SETTINGS
+
 # 修改退出命令到最后
 sed -i '/exit 0/d' $DEFAULT_SETTINGS && echo "exit 0" >> $DEFAULT_SETTINGS
 
@@ -207,10 +208,17 @@ echo -e "\n${GREEN_COLOR}Starting output of modified zzz-default-settings:${RES}
 cat package/new/default-settings/default/zzz-default-settings
 echo -e "${GREEN_COLOR}End of modified zzz-default-settings output.${RES}\n"
 
-# 更改默认主题
-# echo -e "${GREEN_COLOR}\ncat feeds/luci/collections/luci/Makefile:${RES}"
-# cat feeds/luci/collections/luci/Makefile
-# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+# 修改Lan IP
+# sed -i "s/$LAN/10.0.0.1/g" package/base-files/files/bin/config_generate
+
+# 修改默认名称为 EZwrt
+sed -i "/set system.@system\[-1\].hostname=/s#OpenWrt#EZwrt#g" package/base-files/files/bin/config_generate
+
+# 停止uhttpd监听443端口
+# sed -i "s@list listen_https@# list listen_https@g" package/network/services/uhttpd/files/uhttpd.config
+
+# 强制显示2500M和全双工（默认PVE下VirtIO不识别） ImmortalWrt固件内不显示端口状态，可以关闭
+# sed -i '/exit 0/i\ethtool -s eth0 speed 2500 duplex full' package/base-files/files/etc/rc.local
 
 # 更改菜单位置
 echo -e "\n${GREEN_COLOR}Starting output of menu:${RES}"
