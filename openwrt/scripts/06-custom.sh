@@ -215,10 +215,10 @@ echo -e "${GREEN_COLOR}End of modified zzz-default-settings output.${RES}\n"
 sed -i "/set system.@system\[-1\].hostname=/s#OpenWrt#EZwrt#g" package/base-files/files/bin/config_generate
 
 # 停止uhttpd监听443端口
-# sed -i "s@list listen_https@# list listen_https@g" package/network/services/uhttpd/files/uhttpd.config
+sed -i "s@list listen_https@# list listen_https@g" package/network/services/uhttpd/files/uhttpd.config
 
 # 强制显示2500M和全双工（默认PVE下VirtIO不识别） ImmortalWrt固件内不显示端口状态，可以关闭
-# sed -i '/exit 0/i\ethtool -s eth0 speed 2500 duplex full' package/base-files/files/etc/rc.local
+sed -i '/exit 0/i\ethtool -s eth0 speed 2500 duplex full' package/base-files/files/etc/rc.local
 
 # 更改菜单位置
 echo -e "\n${GREEN_COLOR}Starting output of menu:${RES}"
