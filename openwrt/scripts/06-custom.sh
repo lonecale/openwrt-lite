@@ -79,7 +79,8 @@ while IFS= read -r line; do
       echo -e "\033[0;31m源目录不存在：$src_dir\033[0m" >&2
     fi
   fi
-done < "$base_dir/directory_list.txt"
+# done < "$base_dir/directory_list.txt"
+done < "package/new/openwrt/packages/directory_list.txt"
 
 [ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
 [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
