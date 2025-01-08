@@ -178,7 +178,7 @@ EOF
 
 # 更改默认主题(未测试)
 # echo "uci set luci.main.mediaurlbase=/luci-static/kucat" >> $DEFAULT_SETTINGS
-sed -i "/set luci.main.mediaurlbase='/s#/luci-static/argon#/luci-static/kucat#g" $DEFAULT_SETTINGS
+sed -i "s|set luci.main.mediaurlbase='.*'|set luci.main.mediaurlbase='/luci-static/kucat'|" $DEFAULT_SETTINGS
 
 # 修改退出命令到最后
 sed -i '/exit 0/d' $DEFAULT_SETTINGS && echo "exit 0" >> $DEFAULT_SETTINGS
