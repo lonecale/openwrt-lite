@@ -51,7 +51,7 @@ for dir in $(dirname "$(pwd)")/openwrt/*; do
 done
 echo ""
 
-
+: <<'Fix_CGG14'
 # ●●●●●●●●●●●●●●●●●●●●●●●●CGG14修复●●●●●●●●●●●●●●●●●●●●●●●● #
 # base_dir="package/new/openwrt/packages"
 base_dir="../master/packages"
@@ -86,8 +86,8 @@ done < "package/new/openwrt/packages/directory_list.txt"
 [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
 # [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
 
-
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
+Fix_CGG14
 
 # 处理snmpd
 ## 检查并复制 net-snmp
@@ -176,7 +176,7 @@ uci commit network
 
 EOF
 
-# 更改默认主题(未测试)
+# 更改默认主题
 # echo "uci set luci.main.mediaurlbase=/luci-static/kucat" >> $DEFAULT_SETTINGS
 sed -i "s|set luci.main.mediaurlbase='.*'|set luci.main.mediaurlbase='/luci-static/kucat'|" $DEFAULT_SETTINGS
 
@@ -248,9 +248,9 @@ fi
 # chmod +x package/convert_translation.sh && bash package/convert_translation.sh
 
 # 更新passwall gfw规则
-# if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-passwall=y"; then
-    # curl -sfL -o package/new/lite/luci-app-passwall/root/usr/share/passwall/rules/gfwlist https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt
-# fi
+if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-passwall=y"; then
+    curl -sfL -o package/new/lite/luci-app-passwall/root/usr/share/passwall/rules/gfwlist https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt
+fi
 
 # OpenClash 核心
 if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-openclash=y"; then
