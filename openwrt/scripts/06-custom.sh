@@ -16,9 +16,10 @@ rm -rf feeds/luci/applications/{luci-app-smartdns}
 rm -rf feeds/packages/net/{adguardhome,smartdns}
 rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,netdata,luci-app-netdata,luci-app-argon-config,oaf,open-app-filter,luci-app-oaf}
 
+git clone https://$github/lonecale/openwrt-custom-packages package/fix_gcc14 -b gcc14 --depth 1
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
-dirs=(openwrt smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf)
+dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf)
 
 for dir in "${dirs[@]}"; do
   mv "package/new/custom-packages/$dir" "package/new/"
@@ -53,7 +54,7 @@ echo ""
 
 : <<'Fix_CGG14'
 # ●●●●●●●●●●●●●●●●●●●●●●●●CGG14修复●●●●●●●●●●●●●●●●●●●●●●●● #
-# base_dir="package/new/openwrt/packages"
+# base_dir="package/fix_gcc14/openwrt/packages"
 base_dir="../master/packages"
 target_base_dir="feeds/packages"
 
@@ -80,7 +81,7 @@ while IFS= read -r line; do
     fi
   fi
 # done < "$base_dir/directory_list.txt"
-done < "package/new/openwrt/packages/directory_list.txt"
+done < "package/fix_gcc14/openwrt/packages/directory_list.txt"
 
 [ -e "../master/packages/libs/libimobiledevice-glue" ] && rm -rf package/feeds/packages/libimobiledevice-glue && cp -a ../master/packages/libs/libimobiledevice-glue package/feeds/packages/libimobiledevice-glue
 [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
