@@ -52,7 +52,7 @@ for dir in $(dirname "$(pwd)")/openwrt/*; do
 done
 echo ""
 
-#: <<'Fix_CGG14'
+: <<'Fix_CGG14'
 # ●●●●●●●●●●●●●●●●●●●●●●●●CGG14修复●●●●●●●●●●●●●●●●●●●●●●●● #
 # base_dir="package/fix_gcc14/openwrt/packages"
 base_dir="../master/packages"
@@ -88,7 +88,7 @@ done < "package/fix_gcc14/openwrt/packages/directory_list.txt"
 # [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
 
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
-#Fix_CGG14
+Fix_CGG14
 
 # 处理snmpd
 ## 检查并复制 net-snmp
