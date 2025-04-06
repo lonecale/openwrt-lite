@@ -131,6 +131,8 @@ uci set dhcp.@domain[-1].name='time.android.com'
 uci set dhcp.@domain[-1].ip='203.107.6.88'
 # 旁路由关闭DHCP功能
 uci set dhcp.lan.ignore=1
+# 旁路由关闭动态 DHCP
+uci set dhcp.lan.dynamicdhcp='0'
 # IPv6 路由通告服务-禁用
 uci set dhcp.lan.ra=''
 # DHCPv6 服务-禁用
