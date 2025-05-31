@@ -14,12 +14,12 @@ git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 # clean up feeds
 # rm -rf feeds/luci/applications/{luci-app-smartdns}
 # rm -rf feeds/packages/net/{adguardhome,smartdns}
-rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,netdata,luci-app-netdata,luci-app-argon-config,oaf,open-app-filter,luci-app-oaf}
+rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,netdata,luci-app-netdata,luci-app-argon-config,oaf,open-app-filter,luci-app-oaf,speedtest-cli,luci-app-netspeedtest}
 rm -rf package/new/lite/{naiveproxy}
 
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
-dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard luci-app-timecontrol lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf naiveproxy)
+dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard luci-app-timecontrol luci-app-taskplan luci-app-watchdog lucky luci-app-lucky luci-app-netspeedtest luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf naiveproxy)
 
 for dir in "${dirs[@]}"; do
   mv "package/new/custom-packages/$dir" "package/new/"
