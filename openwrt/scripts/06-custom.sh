@@ -242,13 +242,13 @@ curl -sfL https://github.com/immortalwrt/luci/raw/master/modules/luci-base/root/
 [ -e "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 [ -e "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 # [ -e "package/new/extd/luci-app-eqosplus/luasrc/controller/eqosplus.lua" ] && sed -i 's/admin", "network"/admin", "control"/g' package/new/extd/luci-app-eqosplus/luasrc/controller/eqosplus.lua
-[ -e "package/new/extd/luci-app-eqosplus/luasrc/controller/wolplus.lua" ] && sed -i 's/admin", "services"/admin", "control"/g' package/new/extd/luci-app-eqosplus/luasrc/controller/wolplus.lua
+[ -e "package/new/extd/luci-app-wolplus/luasrc/controller/wolplus.lua" ] && sed -i 's/admin", "services"/admin", "control"/g' package/new/extd/luci-app-wolplus/luasrc/controller/wolplus.lua
 echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
 # cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 [ -e "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 [ -e "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 # [ -e "package/new/extd/luci-app-eqosplus/luasrc/controller/eqosplus.lua" ] && cat package/new/extd/luci-app-eqosplus/luasrc/controller/eqosplus.lua
-[ -e "package/new/extd/luci-app-eqosplus/luasrc/controller/wolplus.lua" ] && cat package/new/extd/luci-app-eqosplus/luasrc/controller/wolplus.lua
+[ -e "package/new/extd/luci-app-wolplus/luasrc/controller/wolplus.lua" ] && cat package/new/extd/luci-app-wolplus/luasrc/controller/wolplus.lua
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 
 # luci-app-wechatpush处理
