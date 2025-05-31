@@ -14,12 +14,12 @@ git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 # clean up feeds
 # rm -rf feeds/luci/applications/{luci-app-smartdns}
 # rm -rf feeds/packages/net/{adguardhome,smartdns}
-rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,netdata,luci-app-netdata,luci-app-argon-config,oaf,open-app-filter,luci-app-oaf,speedtest-cli,luci-app-netspeedtest}
+rm -rf package/new/extd/{adguardhome,luci-app-adguardhome,smartdns,luci-app-smartdns,netdata,luci-app-netdata,luci-app-argon-config,oaf,open-app-filter,luci-app-oaf}
 rm -rf package/new/lite/{naiveproxy}
 
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
-dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard luci-app-timecontrol luci-app-taskplan luci-app-watchdog lucky luci-app-lucky luci-app-netspeedtest luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf naiveproxy)
+dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard luci-app-timecontrol luci-app-taskplan luci-app-watchdog lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf naiveproxy)
 
 for dir in "${dirs[@]}"; do
   mv "package/new/custom-packages/$dir" "package/new/"
@@ -176,8 +176,13 @@ uci commit network
 # 修复luckyarch权限
 [ -e "/usr/bin/luckyarch" ] && chmod 755 /usr/bin/luckyarch
 # 处理AdGuardHome核心
-[ -e "/usr/bin/AdGuardHome" ] && mv /usr/bin/AdGuardHome /usr/bin/AdGuardHome_temp && mkdir /usr/bin/AdGuardHome && mv /usr/bin/AdGuardHome_temp /usr/bin/AdGuardHome/AdGuardHome && chmod 755 /usr/bin/AdGuardHome/AdGuardHome
+# [ -e "/usr/bin/AdGuardHome" ] && mv /usr/bin/AdGuardHome /usr/bin/AdGuardHome_temp && mkdir /usr/bin/AdGuardHome && mv /usr/bin/AdGuardHome_temp /usr/bin/AdGuardHome/AdGuardHome && chmod 755 /usr/bin/AdGuardHome/AdGuardHome
+[ -e "/usr/bin/AdGuardHome" ] && chmod 755 /usr/bin/AdGuardHome
 [ -d "/usr/share/AdGuardHome" ] && chmod -R 755 /usr/share/AdGuardHome
+# 处理路由安全看门狗
+[ -e "/etc/init.d/watchdog" ] && chmod 755 /etc/init.d/watchdog
+[ -d "/usr/share/watchdog" ] && chmod -R 755 /usr/share/watchdog
+
 
 EOF
 
@@ -235,10 +240,14 @@ curl -sfL https://github.com/immortalwrt/luci/raw/master/modules/luci-base/root/
 
 [ -e "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 [ -e "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && sed -i 's/admin\/services\//admin\/vpn\//g' package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+# [ -e "package/new/extd/luci-app-eqosplus/luasrc/controller/eqosplus.lua" ] && sed -i 's/admin", "network"/admin", "control"/g' package/new/extd/luci-app-eqosplus/luasrc/controller/eqosplus.lua
+[ -e "package/new/extd/luci-app-eqosplus/luasrc/controller/wolplus.lua" ] && sed -i 's/admin", "services"/admin", "control"/g' package/new/extd/luci-app-eqosplus/luasrc/controller/wolplus.lua
 echo -e "\n${GREEN_COLOR}Starting output of modified menu:${RES}"
 # cat feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
 [ -e "package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json" ] && cat package/new/extd/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 [ -e "package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json" ] && cat package/new/extd/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+# [ -e "package/new/extd/luci-app-eqosplus/luasrc/controller/eqosplus.lua" ] && cat package/new/extd/luci-app-eqosplus/luasrc/controller/eqosplus.lua
+[ -e "package/new/extd/luci-app-eqosplus/luasrc/controller/wolplus.lua" ] && cat package/new/extd/luci-app-eqosplus/luasrc/controller/wolplus.lua
 echo -e "${GREEN_COLOR}End of modified menu.${RES}\n"
 
 # luci-app-wechatpush处理
