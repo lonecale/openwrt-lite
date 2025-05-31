@@ -73,6 +73,7 @@ while IFS= read -r line; do
     # 检查源目录是否存在
     if [[ -d "$src_dir" ]]; then
       echo -e "\033[0;32m开始同步：$src_dir 到 $dest_dir\033[0m"
+      mkdir -p "$dest_dir"
       rsync -av --delete "$src_dir/" "$dest_dir/" || {
         echo -e "\033[0;31m同步失败：$src_dir 到 $dest_dir\033[0m" >&2
         continue  # 发生错误时跳过当前循环
