@@ -283,7 +283,7 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
     sed -i 's|option geo_custom_url.*|option geo_custom_url '\''https://github.com/xream/geoip/releases/latest/download/ipinfo.country.mmdb'\''|' ../config/openclash
     sed -i 's|option geosite_custom_url.*|option geosite_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat'\''|' ../config/openclash
     sed -i 's|option geoip_custom_url.*|option geoip_custom_url '\''https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'\''|' ../config/openclash
-    sed -i 's|option geoasn_custom_url.*|option geoasn_custom_url '\''https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-ASN.mmdb'\''|' ../config/openclash
+    sed -i 's|option geoasn_custom_url.*|option geoasn_custom_url '\''https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb'\''|' ../config/openclash
     sed -i 's|option chnr_custom_url.*|option chnr_custom_url '\''https://us.cooluc.com/cidr/cn_ipv4.cidr'\''|' ../config/openclash
     sed -i 's|option chnr6_custom_url.*|option chnr6_custom_url '\''https://us.cooluc.com/cidr/cn_ipv6.cidr'\''|' ../config/openclash
     # sed -i 's|option chnr_custom_url.*|option chnr_custom_url '\''https://raw.githubusercontent.com/DH-Teams/DH-Geo_AS_IP_CN/main/Geo_AS_IP_CN.txt'\''|' ../config/openclash
