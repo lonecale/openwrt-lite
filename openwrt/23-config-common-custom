@@ -26,9 +26,7 @@ CONFIG_PACKAGE_luci-app-netdata=y
 CONFIG_PACKAGE_luci-app-netspeedtest=y
 # CONFIG_PACKAGE_luci-app-nfs is not set
 CONFIG_PACKAGE_luci-app-nlbwmon=y
-CONFIG_PROC_FS=y
-CONFIG_SYSCTL_PROC=y
-CONFIG_PACKAGE_luci-app-oaf=y
+# CONFIG_PACKAGE_luci-app-oaf is not set
 # CONFIG_PACKAGE_luci-app-qbittorrent is not set
 # CONFIG_PACKAGE_luci-app-quickfile is not set
 # CONFIG_PACKAGE_luci-app-qosmate is not set
