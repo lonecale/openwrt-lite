@@ -236,6 +236,10 @@ mv ../master/base-23.05/curl feeds/packages/net/curl
 rm -rf package/libs/libpcap
 mv ../master/base-23.05/libpcap package/libs/libpcap
 
+# libxcrypt
+rm -rf feeds/packages/libs/libxcrypt
+mv ../master/openwrt/package/libs/xcrypt package/libs/xcrypt
+
 # docker
 [ "$DEV_BUILD" = "y" ] && docker_branch=main || docker_branch=openwrt-23.05
 rm -rf feeds/{luci/applications/luci-app-dockerman,packages/utils/docker-compose}
@@ -316,6 +320,10 @@ curl -s https://$mirror/openwrt/patch/odhcpd/001-odhcpd-RFC-9096-compliance.patc
 pushd feeds/luci
     curl -s https://$mirror/openwrt/patch/odhcpd/0001-luci-mod-network-add-option-for-ipv6-max-plt-vlt.patch | patch -p1
 popd
+
+# ucode - bump version
+rm -rf package/utils/ucode
+mv ../master/base-23.05/ucode package/utils/ucode
 
 # zlib - bump version
 rm -rf package/libs/zlib
