@@ -96,6 +96,11 @@ Fix_CGG14
 # 处理snmpd
 ## 检查并复制 net-snmp
 # [ -e "../master/packages/net/net-snmp" ] && rm -rf feeds/packages/net/net-snmp && cp -a ../master/packages/net/net-snmp feeds/packages/net/net-snmp
+if [ -e "../master/packages/net/net-snmp" ]; then
+    echo "目录 ../master/packages/net/net-snmp 存在。"
+else
+    echo "目录 ../master/packages/net/net-snmp 不存在，请检查路径。"
+fi
 
 # 处理luci-app-statistics
 ## 检查并复制 rrdtool1
