@@ -102,6 +102,12 @@ else
     echo "目录 ../master/packages/net/net-snmp 不存在，请检查路径。"
 fi
 
+if [ -e "feeds/packages/net/net-snmp" ]; then
+    echo "目录 feeds/packages/net/net-snmp 存在。"
+else
+    echo "目录 feeds/packages/net/net-snmp 不存在，请检查路径。"
+fi
+
 # 处理luci-app-statistics
 ## 检查并复制 rrdtool1
 # [ -e "../master/packages/utils/rrdtool1" ] && rm -rf feeds/packages/utils/rrdtool1 && cp -a ../master/packages/utils/rrdtool1 feeds/packages/utils/rrdtool1
