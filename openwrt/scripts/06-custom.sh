@@ -270,7 +270,8 @@ fi
 if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-openclash=y"; then
     # 保存当前目录并切换到指定目录
     pushd package/new/lite/luci-app-openclash/root/etc/openclash
-    CORE_MATE=https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64.tar.gz
+    CORE_MATE=https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64-v2.tar.gz
+    CORE_Smart=https://raw.githubusercontent.com/vernesong/OpenClash/core/master/smart/clash-linux-amd64-v2.tar.gz
     curl -sfL -o ./Country.mmdb https://github.com/xream/geoip/releases/latest/download/ipinfo.country.mmdb
     curl -sfL -o ./GeoSite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat
     curl -sfL -o ./GeoIP.dat https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat
