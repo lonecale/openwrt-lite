@@ -373,7 +373,7 @@ start_seconds=$(date --date="$starttime" +%s);
 end_seconds=$(date --date="$endtime" +%s);
 SEC=$((end_seconds-start_seconds));
 
-if [ -f bin/targets/*/*/sha256sums ]; 键，然后
+if [ -f bin/targets/*/*/sha256sums ]; then
     echo -e "${GREEN_COLOR} Build success! ${RES}"
     echo -e " Build time: $(( SEC / 3600 ))h,$(( (SEC % 3600) / 60 ))m,$(( (SEC % 3600) % 60 ))s"
 else
