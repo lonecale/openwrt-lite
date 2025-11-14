@@ -25,7 +25,7 @@ endgroup() {
 ###############################
 
 # openwrt repo
-OPENWRT_REPO=pmkol/openwrt-lite
+OPENWRT_REPO=lonecale/openwrt-lite
 
 # github proxy
 [ "$CN_PROXY" = "y" ] && [ -z "$GITHUB_REPO" ] && github_proxy="git.apad.pro/https://" || github_proxy=""
@@ -373,7 +373,7 @@ start_seconds=$(date --date="$starttime" +%s);
 end_seconds=$(date --date="$endtime" +%s);
 SEC=$((end_seconds-start_seconds));
 
-if [ -f bin/targets/*/*/sha256sums ]; then
+if [ -f bin/targets/*/*/sha256sums ]; 键，然后
     echo -e "${GREEN_COLOR} Build success! ${RES}"
     echo -e " Build time: $(( SEC / 3600 ))h,$(( (SEC % 3600) / 60 ))m,$(( (SEC % 3600) % 60 ))s"
 else
