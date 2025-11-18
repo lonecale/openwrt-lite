@@ -33,6 +33,7 @@ CONFIG_PACKAGE_luci-app-nlbwmon=y
 # CONFIG_PACKAGE_luci-app-ramfree is not set
 # CONFIG_PACKAGE_luci-app-samba4 is not set
 CONFIG_PACKAGE_luci-app-smartdns=y
+CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y
 CONFIG_PACKAGE_luci-app-socat=y
 # CONFIG_PACKAGE_luci-app-sqm is not set
 CONFIG_PACKAGE_luci-app-statistics=y
@@ -148,7 +149,7 @@ CONFIG_PACKAGE_openssh-keygen=y
 
 ### Smartdns 核心
 # CONFIG_PACKAGE_smartdns is not set
-CONFIG_PACKAGE_smartdns-ui=y
+# CONFIG_PACKAGE_smartdns-ui is not set
 
 ### Adguardhome 核心
 CONFIG_PACKAGE_adguardhome=y
