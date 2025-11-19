@@ -109,7 +109,8 @@ Fix_CGG14
 if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y"; then
     git clone https://$github/immortalwrt/packages package/immortalwrt-packages --depth 1
     [ -e "package/immortalwrt-packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/immortalwrt-packages/lang/rust feeds/packages/lang/rust
-    [ -e "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
+    # [ -e "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
+    rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
     rm -rf package/immortalwrt-packages
 fi
 
