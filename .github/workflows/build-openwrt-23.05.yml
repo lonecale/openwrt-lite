@@ -124,12 +124,33 @@ jobs:
         export ${{ github.event.inputs.build_options }} LAN=${{ github.event.inputs.lan_addr }}
         bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/main/openwrt/build.sh) ${{ github.event.inputs.version }} ${{ github.event.inputs.device }}
 
+    #- name: Extensive logs after a failed compilation
+      #working-directory: /builder
+      #if: steps.compile.outcome == 'failure'
+      #run: |
+        #cd openwrt
+        #make V=s
+
     - name: Extensive logs after a failed compilation
       working-directory: /builder
       if: steps.compile.outcome == 'failure'
       run: |
         cd openwrt
-        make V=s
+
+        echo "==== Rebuild smartdns with verbose logs ===="
+        # 重编 smartdns
+        make package/new/smartdns/compile V=s || {
+          echo "==== DEBUG: smartdns-ui target tree ===="
+          # 把 smartdns-ui 的 target 目录展开看一眼
+          ls -R build_dir/target-*/smartdns-Release*/plugin/smartdns-ui/target || true
+
+          echo "==== DEBUG: search libsmartdns_ui*.so ===="
+          find build_dir/target-*/smartdns-Release*/plugin/smartdns-ui/target \
+            -maxdepth 6 -type f -name 'libsmartdns_ui*' || echo "NO libsmartdns_ui.so FOUND"
+
+          exit 1
+        }
+
 
     - name: Prepare Firmware Files
       working-directory: /builder
