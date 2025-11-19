@@ -90,6 +90,7 @@ done < "package/fix_gcc14/openwrt/packages/directory_list.txt"
 [ -e "../master/packages/libs/libtatsu" ] && rm -rf package/feeds/packages/libtatsu && cp -a ../master/packages/libs/libtatsu package/feeds/packages/libtatsu
 # [ -e "../master/packages/lang/luajit2" ] && rm -rf package/feeds/packages/luajit2 && cp -a ../master/packages/lang/luajit2 package/feeds/packages/luajit2
 
+rm -rf package/fix_gcc14
 # ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● #
 Fix_CGG14
 
@@ -103,6 +104,14 @@ Fix_CGG14
 # [ -e "../master/packages/utils/collectd" ] && rm -rf feeds/packages/utils/collectd && cp -a ../master/packages/utils/collectd feeds/packages/utils/collectd
 ## 检查并复制 luci-app-statistics
 [ -e "../master/luci/applications/luci-app-statistics" ] && rm -rf feeds/luci/applications/luci-app-statistics && cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
+
+# smartdns_WebUI处理
+if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y"; then
+    git clone https://$github/immortalwrt/packages package/immortalwrt-packages --depth 1
+    [ -e "package/immortalwrt-packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/immortalwrt-packages/lang/rust feeds/packages/lang/rust
+    [ -e "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
+    rm -rf package/immortalwrt-packages
+fi
 
 # 处理openssh
 ## 检查并复制 openssh
