@@ -19,7 +19,7 @@ rm -rf package/new/lite/{naiveproxy}
 
 git clone https://$github/lonecale/openwrt-custom-packages package/new/custom-packages
 
-dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-advancedplus luci-app-netwizard luci-app-timecontrol luci-app-taskplan luci-app-watchdog lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf naiveproxy)
+dirs=(smartdns adguardhome luci-app-adguardhome luci-app-smartdns luci-app-wechatpush luci-app-chatgpt-web luci-theme-kucat luci-app-kucat-config luci-app-advancedplus luci-app-netwizard luci-app-timecontrol luci-app-taskplan luci-app-watchdog lucky luci-app-lucky luci-app-syscontrol netdata-ssl luci-app-netdata luci-app-oaf naiveproxy)
 
 for dir in "${dirs[@]}"; do
   mv "package/new/custom-packages/$dir" "package/new/"
