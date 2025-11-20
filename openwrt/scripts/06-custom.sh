@@ -117,7 +117,7 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
     [ -e "package/immortalwrt-packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/immortalwrt-packages/lang/rust feeds/packages/lang/rust
     # [ -e "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
     rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
-    
+    sed -i 's|include ../../lang/rust/rust-host-build.mk|include $(TOPDIR)/feeds/packages/lang/rust/rust-host-build.mk|' feeds/packages/devel/rust-bindgen/Makefile
     [ -d "feeds/packages/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/lang/rust${RES}"
     [ -d "feeds/packages/devel/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/devel/rust-bindgen${RES}" || echo -e "\n${RED_COLOR}不存在 feeds/packages/devel/rust-bindgen${RES}"
 
