@@ -106,14 +106,24 @@ Fix_CGG14
 [ -e "../master/luci/applications/luci-app-statistics" ] && rm -rf feeds/luci/applications/luci-app-statistics && cp -a ../master/luci/applications/luci-app-statistics feeds/luci/applications/luci-app-statistics
 
 # smartdns_WebUI处理
+cfg_url="https://$mirror/openwrt/23-config-common-$cfg_ver"
+echo -e "\n${BLUE_COLOR}检查 smartdns WebUI 开关，配置地址：${cfg_url}${RES}"
 if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y"; then
+
+    echo -e "${GREEN_COLOR}检测到 CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y，进入 rust/rust-bindgen 处理逻辑...${RES}"
+    
     git clone https://$github/immortalwrt/packages package/immortalwrt-packages --depth 1
+
     [ -e "package/immortalwrt-packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/immortalwrt-packages/lang/rust feeds/packages/lang/rust
     # [ -e "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
     rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
-    [ -d "/feeds/packages/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在feeds/packages/lang/rust:${RES}"
-    [ -d "/feeds/packages/devel/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在feeds/packages/devel/rust-bindgen:${RES}"
+    
+    [ -d "feeds/packages/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/lang/rust${RES}"
+    [ -d "feeds/packages/devel/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/devel/rust-bindgen${RES}" || echo -e "\n${RED_COLOR}不存在 feeds/packages/devel/rust-bindgen${RES}"
+
     rm -rf package/immortalwrt-packages
+else
+    echo -e "${YELLOW_COLOR}未检测到 CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y，跳过 rust/rust-bindgen 处理。${RES}"
 fi
 
 # 处理openssh
