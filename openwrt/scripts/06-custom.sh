@@ -114,12 +114,15 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
     
     git clone https://$github/immortalwrt/packages package/immortalwrt-packages --depth 1
 
-    # [ -e "package/immortalwrt-packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/immortalwrt-packages/lang/rust feeds/packages/lang/rust
-    # [ -e "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
-    rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/lang/rust-bindgen
-    sed -i 's|include ../../lang/rust/rust-host-build.mk|include $(TOPDIR)/feeds/packages/lang/rust/rust-host-build.mk|' feeds/packages/lang/rust-bindgen/Makefile
+    [ -d "package/immortalwrt-packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/immortalwrt-packages/lang/rust feeds/packages/lang/rust
+    # [ -d "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
+    
+    [ -d "feeds/packages/devel/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/devel/rust-bindgen${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/devel/rust-bindgen${RES}"
+    [ -d "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen package/new
+    [ -d "package/new/rust-bindgen" ] &&  sed -i 's|include ../../lang/rust/rust-host-build.mk|include $(TOPDIR)/feeds/packages/lang/rust/rust-host-build.mk|' package/new/rust-bindgen/Makefile
+    
     [ -d "feeds/packages/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/lang/rust${RES}"
-    [ -d "feeds/packages/lang/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/lang/rust-bindgen${RES}" || echo -e "\n${RED_COLOR}不存在 feeds/packages/lang/rust-bindgen${RES}"
+    [ -d "package/new/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 package/new/rust-bindgen${RES}" || echo -e "\n${RED_COLOR}不存在 package/new/rust-bindgen${RES}"
 
     rm -rf package/immortalwrt-packages
 else
