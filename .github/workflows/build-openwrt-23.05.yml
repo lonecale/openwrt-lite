@@ -136,18 +136,28 @@ jobs:
       if: steps.compile.outcome == 'failure'
       run: |
         cd openwrt
-
+    
+        echo "==== Clean smartdns build dir ===="
+        # 清理 smartdns，避免 .built 之类的标记导致 Build/Compile 被跳过
+        make package/new/smartdns/clean V=s || true
+        rm -f build_dir/target-*/smartdns-Release*/.built || true
+    
         echo "==== Rebuild smartdns with verbose logs ===="
-        # 重编 smartdns
+        # 重编 smartdns（包含 smartdns-ui），开启详细日志
         make package/new/smartdns/compile V=s || {
-          echo "==== DEBUG: smartdns-ui target tree ===="
-          # 把 smartdns-ui 的 target 目录展开看一眼
-          ls -R build_dir/target-*/smartdns-Release*/plugin/smartdns-ui/target || true
-
+          echo "==== DEBUG: full smartdns build tree ===="
+          # 先看整个 smartdns 构建目录结构，确认 plugin 等目录是否存在
+          ls -R build_dir/target-*/smartdns-Release*/ || true
+    
+          echo "==== DEBUG: plugin subtree (if exists) ===="
+          # 如果有 plugin 目录，再展开看一眼
+          ls -R build_dir/target-*/smartdns-Release*/plugin || true
+    
           echo "==== DEBUG: search libsmartdns_ui*.so ===="
-          find build_dir/target-*/smartdns-Release*/plugin/smartdns-ui/target \
-            -maxdepth 6 -type f -name 'libsmartdns_ui*' || echo "NO libsmartdns_ui.so FOUND"
-
+          # 不限定路径，直接在整个 smartdns 构建目录下搜 so，看是否实际被编译出来
+          find build_dir/target-*/smartdns-Release*/ \
+            -maxdepth 8 -type f -name 'libsmartdns_ui*' || echo "NO libsmartdns_ui.so FOUND"
+    
           exit 1
         }
 
