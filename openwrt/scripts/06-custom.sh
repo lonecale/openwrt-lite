@@ -111,18 +111,24 @@ echo -e "\n${BLUE_COLOR}检查 smartdns WebUI 开关，配置地址：${cfg_url}
 if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y"; then
 
     echo -e "${GREEN_COLOR}检测到 CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y，进入 rust/rust-bindgen 处理逻辑...${RES}"
-    
+
+    [ -e "../master/packages/lang/node" ] && echo -e "\n${GREEN_COLOR}存在 master/packages/lang/node${RES}" ||  echo -e "\n${RED_COLOR}不存在 master/packages/lang/node${RES}"
+    [ -e "../master/packages/lang/node" ] && rm -rf feeds/packages/lang/node && cp -a ../master/packages/lang/node feeds/packages/lang/node
+
+    [ -e "../master/packages/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 master/packages/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 master/packages/lang/rust${RES}"
+    [ -e "../master/packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a ../master/packages/lang/rust feeds/packages/lang/rust
+	
+	
     git clone https://$github/immortalwrt/packages package/immortalwrt-packages --depth 1
 
-    # [ -d "package/immortalwrt-packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/immortalwrt-packages/lang/rust feeds/packages/lang/rust
-    # [ -d "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen feeds/packages/devel/rust-bindgen
     
-    [ -d "feeds/packages/devel/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/devel/rust-bindgen${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/devel/rust-bindgen${RES}"
-    [ -d "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen package/new
-    [ -d "package/new/rust-bindgen" ] &&  sed -i 's|include ../../lang/rust/rust-host-build.mk|include $(TOPDIR)/feeds/packages/lang/rust/rust-host-build.mk|' package/new/rust-bindgen/Makefile
+    [ -e "feeds/packages/devel/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/devel/rust-bindgen${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/devel/rust-bindgen${RES}"
+    [ -e "package/immortalwrt-packages/devel/rust-bindgen" ] && rm -rf feeds/packages/devel/rust-bindgen && cp -a package/immortalwrt-packages/devel/rust-bindgen package/new
+    [ -e "package/new/rust-bindgen" ] &&  sed -i 's|include ../../lang/rust/rust-host-build.mk|include $(TOPDIR)/feeds/packages/lang/rust/rust-host-build.mk|' package/new/rust-bindgen/Makefile
     
-    [ -d "feeds/packages/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/lang/rust${RES}"
-    [ -d "package/new/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 package/new/rust-bindgen${RES}" || echo -e "\n${RED_COLOR}不存在 package/new/rust-bindgen${RES}"
+    [ -e "feeds/packages/lang/node" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/lang/node${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/lang/node${RES}"
+    [ -e "feeds/packages/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/lang/rust${RES}"
+    [ -e "package/new/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 package/new/rust-bindgen${RES}" || echo -e "\n${RED_COLOR}不存在 package/new/rust-bindgen${RES}"
 
     rm -rf package/immortalwrt-packages
 else
