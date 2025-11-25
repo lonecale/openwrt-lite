@@ -119,8 +119,9 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
 
     [ -e "package/packages-24.10/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 package/packages-24.10/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 package/packages-24.10/lang/rust${RES}"
     [ -e "package/packages-24.10/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/packages-24.10/lang/rust feeds/packages/lang/rust
-    [ -e "feeds/packages/lang/rust" ] &&  sed -i 's|TOOLCHAIN_ROOT_DIR|TOOLCHAIN_DIR|' feeds/packages/lang/rust/Makefile
-	
+    [ -e "feeds/packages/lang/rust" ] && sed -i 's|TOOLCHAIN_ROOT_DIR|TOOLCHAIN_DIR|' feeds/packages/lang/rust/Makefile && sed -i 's/llvm.download-ci-llvm=true/llvm.download-ci-llvm=if-unchanged/' feeds/packages/lang/rust/Makefile
+	[ -e "feeds/packages/lang/rust" ] && echo -e "${GREEN_COLOR}End of rust/Makefile output.${RES}\n" && cat feeds/packages/lang/rust/Makefile
+    
     git clone https://$github/immortalwrt/packages package/immortalwrt-packages --depth 1
     
     [ -e "feeds/packages/devel/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 feeds/packages/devel/rust-bindgen${RES}" ||  echo -e "\n${RED_COLOR}不存在 feeds/packages/devel/rust-bindgen${RES}"
