@@ -112,11 +112,13 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
 
     echo -e "${GREEN_COLOR}检测到 CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y，进入 rust/rust-bindgen 处理逻辑...${RES}"
 
-    [ -e "../master/packages/lang/node" ] && echo -e "\n${GREEN_COLOR}存在 master/packages/lang/node${RES}" ||  echo -e "\n${RED_COLOR}不存在 master/packages/lang/node${RES}"
-    [ -e "../master/packages/lang/node" ] && rm -rf feeds/packages/lang/node && cp -a ../master/packages/lang/node feeds/packages/lang/node
+	git clone https://$github/openwrt/packages package/packages-24.10 -b openwrt-24.10 --depth=1
 
-    [ -e "../master/packages/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 master/packages/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 master/packages/lang/rust${RES}"
-    [ -e "../master/packages/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a ../master/packages/lang/rust feeds/packages/lang/rust
+    [ -e "package/packages-24.10/lang/node" ] && echo -e "\n${GREEN_COLOR}存在 package/packages-24.10/lang/node${RES}" ||  echo -e "\n${RED_COLOR}不存在 package/packages-24.10/lang/node${RES}"
+    [ -e "package/packages-24.10/lang/node" ] && rm -rf feeds/packages/lang/node && cp -a package/packages-24.10/lang/node feeds/packages/lang/node
+
+    [ -e "package/packages-24.10/lang/rust" ] && echo -e "\n${GREEN_COLOR}存在 package/packages-24.10/lang/rust${RES}" ||  echo -e "\n${RED_COLOR}不存在 package/packages-24.10/lang/rust${RES}"
+    [ -e "package/packages-24.10/lang/rust" ] && rm -rf feeds/packages/lang/rust && cp -a package/packages-24.10/lang/rust feeds/packages/lang/rust
 	
 	
     git clone https://$github/immortalwrt/packages package/immortalwrt-packages --depth 1
@@ -131,6 +133,7 @@ if curl -s "https://$mirror/openwrt/23-config-common-$cfg_ver" | grep -q "^CONFI
     [ -e "package/new/rust-bindgen" ] && echo -e "\n${GREEN_COLOR}存在 package/new/rust-bindgen${RES}" || echo -e "\n${RED_COLOR}不存在 package/new/rust-bindgen${RES}"
 
     rm -rf package/immortalwrt-packages
+	rm -rf package/packages-24.10
 else
     echo -e "${YELLOW_COLOR}未检测到 CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_WebUI=y，跳过 rust/rust-bindgen 处理。${RES}"
 fi
